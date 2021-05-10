@@ -1,0 +1,29 @@
+.Headers {
+    width: 98%;
+    margin: 0.8vh auto;
+    height: 77vh;
+    background-color: #81B622;
+    border-radius: 5px;
+}
+
+.HeadersLabel {
+    margin: 0;
+    padding: 0;
+    font-size: 4vh;
+    margin-left: 2vh;
+}
+
+.AddHeaderButton {
+    float: right;
+    font-size: 4vh;
+    margin-right: 3vh;
+    border: none;
+    padding: 0.5vh 2vh;
+    border-radius: 5px;
+}
+
+.AddHeaderButton:hover {
+    background-color: #3D550C;
+    color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,35 @@
+.HeaderControll {
+    width: 98%;
+    height: 6vh;
+    margin: auto;
+}
+
+.HeaderKeyInput, .HeaderValueInput {
+    font-size: 4vh;
+    border: none;
+    float: left;
+    margin-top: 0.4vh;
+    border-radius: 5px;
+    padding: 0 0.5%;
+}
+
+.HeaderValueInput {
+    width: 63.5%;
+    margin-left: 1%;
+}
+
+.HeaderKeyInput {
+    width: 30%;
+}
+
+.HeaderDeleteIcon {
+    font-size: 3.5vh;
+    margin-top: 0.8vh;
+    margin-left: 1%;
+    color: darkslategrey;
+}
+
+.HeaderDeleteIcon:hover {
+    cursor: pointer;
+    color: black;
+}
