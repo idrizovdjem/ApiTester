@@ -10,6 +10,7 @@
     border-radius: 5px;
     margin: 1vh 1%;
     width: 15%;
+    background-color: aliceblue;
 }
 
 .SearchField {
@@ -20,6 +21,7 @@
     border-radius: 5px;
     float: left;
     margin-top: 1vh;
+    background-color: aliceblue;
 }
 
 .GoButton {
@@ -29,9 +31,10 @@
     border: none;
     height: 5.8vh;
     border-radius: 5px;
+    background-color: aliceblue;
 }
 
 .GoButton:hover {
-    background-color: white;
+    background-color: #ECF87F;
     cursor: pointer;
 }
