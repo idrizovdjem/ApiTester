@@ -1,6 +1,6 @@
 .SideBar {
     width: 20%;
-    background-color: #C197D2;
+    background-color: #18A558;
     float: left;
     height: 94vh;
     text-align: center;
@@ -10,7 +10,7 @@
     padding: 0;
     margin: 0;
     font-size: 5vh;
-    color: black;
+    color: white;
 }
 
 .HistoryContainer {
