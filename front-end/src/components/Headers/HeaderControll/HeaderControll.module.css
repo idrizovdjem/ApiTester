@@ -14,7 +14,7 @@
 }
 
 .HeaderValueInput {
-    width: 63.5%;
+    width: 60%;
     margin-left: 1%;
 }
 
@@ -22,14 +22,15 @@
     width: 30%;
 }
 
-.HeaderDeleteIcon {
+.HeaderIcon {
     font-size: 3.5vh;
     margin-top: 0.8vh;
     margin-left: 1%;
     color: darkslategrey;
+    user-select: none;
 }
 
-.HeaderDeleteIcon:hover {
+.HeaderIcon:hover {
     cursor: pointer;
     color: black;
 }
