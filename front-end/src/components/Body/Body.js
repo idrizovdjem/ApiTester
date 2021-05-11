@@ -3,38 +3,61 @@ import classes from './Body.module.css';
 
 import CodeEditor from './CodeEditor/CodeEditor';
 
-const Body = () => {
+const Body = ({ body, setBody }) => {
     const [bodyType, setBodyType] = useState('json');
     const [fontSize, setFontSize] = useState('20px');
     const [fontTheme, setFontTheme] = useState('github');
 
     const getBodyEditor = () => {
-        switch(bodyType) {
-            case 'json': return <CodeEditor bodyType='json' fontSize={fontSize} theme={fontTheme} />
-            case 'xml': return <CodeEditor bodyType='xml'fontSize={fontSize} theme={fontTheme} />
+        switch (bodyType) {
+            case 'json': return (
+                <CodeEditor
+                    bodyType='json'
+                    fontSize={fontSize}
+                    theme={fontTheme}
+                    body={body}
+                    updateBody={changeBodyHandler}
+                />
+            )
+            case 'xml': return (
+                <CodeEditor
+                    bodyType='xml'
+                    fontSize={fontSize}
+                    theme={fontTheme}
+                    body={body}
+                    updateBody={changeBodyHandler}
+                />
+            )
             case 'form url encoded': return 'form url encoded body';
             default: return null;
         }
     }
 
+    const changeBodyHandler = (newBody) => {
+        setBody(oldBody => {
+            oldBody.value = newBody;
+            return oldBody;
+        });
+    }
+
     const changeFontSizeHandler = (event) => {
         const newValue = event.target.value;
-        if(newValue.endsWith('px') === false) {
+        if (newValue.endsWith('px') === false) {
             return;
         }
 
         const integerPart = newValue.substr(0, newValue.length - 2);
-        if(integerPart === '') {
+        if (integerPart === '') {
             setFontSize('px');
             return;
         }
 
         const pixelsValue = parseInt(integerPart);
-        if(Number.isNaN(pixelsValue)) {
+        if (Number.isNaN(pixelsValue)) {
             return;
         }
 
-        if(pixelsValue < 1) {
+        if (pixelsValue < 1) {
             return;
         }
 
@@ -44,6 +67,17 @@ const Body = () => {
     const changeBodyTypeHandler = (event) => {
         const newBodyType = event.target.value.toLowerCase();
         setBodyType(newBodyType);
+        setBody(oldBody => {
+            oldBody.type = newBodyType;
+            
+            if(newBodyType === 'form url encoded') {
+                oldBody.value = [];
+            } else if(newBodyType === 'json' || newBodyType === 'xml') {
+                oldBody.value = '';
+            }
+
+            return oldBody;
+        });
     }
 
     const changeThemeHandler = (event) => {

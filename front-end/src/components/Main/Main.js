@@ -8,12 +8,13 @@ import Body from '../Body/Body';
 
 const Main = () => {
     const [headers, setHeaders] = useState([]);
+    const [body, setBody] = useState({ type: 'json', value: '' });
     const [currentTab, setCurrentTab] = useState('Body');
 
     const getCurrentTab = () => {
         switch(currentTab) {
             case 'Headers': return <Headers headers={headers} setHeaders={setHeaders} />
-            case 'Body': return <Body />
+            case 'Body': return <Body body={body} setBody={setBody} />
             default: return <Headers headers={headers} setHeaders={setHeaders} />
         }
     }

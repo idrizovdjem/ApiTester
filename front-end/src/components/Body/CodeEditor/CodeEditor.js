@@ -11,11 +11,13 @@ import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/theme-chaos";
 import "ace-builds/src-noconflict/theme-cobalt";
 
-const CodeEditor = (props) => {
+const CodeEditor = (props) => {    
     return (
         <AceEditor
             mode={props.bodyType}
             theme={props.theme}
+            value={props.body.value}
+            onChange={(newBody) => props.updateBody(newBody)}
             fontSize={props.fontSize}
             editorProps={{ $blockScrolling: true }}
             style={{
