@@ -47,6 +47,7 @@ const SectionButtonsContainer = () => {
                             isActive={button.isActive}
                             select={changeActiveButtonHandler}
                             text={button.text}
+                            key={button.text}
                         />
                     );
                 })
