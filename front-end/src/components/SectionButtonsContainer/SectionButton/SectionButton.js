@@ -7,6 +7,7 @@ const SectionButton = (props) => {
 
     const selectButtonHandler = () => {
         props.select(props.text);
+        props.selectTab(props.text);
     }
 
     return (

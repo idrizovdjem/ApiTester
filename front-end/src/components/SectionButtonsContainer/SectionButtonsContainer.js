@@ -3,7 +3,7 @@ import classes from './SectionButtonsContainer.module.css';
 
 import SectionButton from './SectionButton/SectionButton';
 
-const SectionButtonsContainer = () => {
+const SectionButtonsContainer = (props) => {
     const [buttons, setButtons] = useState(
         [
             {
@@ -48,6 +48,7 @@ const SectionButtonsContainer = () => {
                             select={changeActiveButtonHandler}
                             text={button.text}
                             key={button.text}
+                            selectTab={props.selectTab}
                         />
                     );
                 })
