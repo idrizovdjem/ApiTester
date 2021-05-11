@@ -11,6 +11,7 @@
     margin: 1vh 1%;
     width: 15%;
     background-color: aliceblue;
+    outline: none;
 }
 
 .SearchField {

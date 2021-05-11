@@ -27,3 +27,8 @@
     color: white;
     cursor: pointer;
 }
+
+.CodeMirror {
+    width: 100%;
+    background-color: red;
+}
