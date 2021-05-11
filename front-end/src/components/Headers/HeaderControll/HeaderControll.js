@@ -25,14 +25,14 @@ const HeaderControll = (props) => {
             <input 
                 className={classes.HeaderKeyInput} 
                 placeholder='Header Key' 
-                value={headerKey} 
+                value={headerKey}
                 onChange={changeHeaderKeyHandler}
             />
 
             <input 
                 className={classes.HeaderValueInput} 
-                placeholder='Header Value' 
-                value={headerValue} 
+                placeholder='Header Value'
+                value={headerValue}
                 onChange={changeHeaderValueHandler}
             />
 

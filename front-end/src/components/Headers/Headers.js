@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import classes from './Headers.module.css';
 
 import HeaderControll from './HeaderControll/HeaderControll';
 
-const Headers = () => {
-    const [headers, setHeaders] = useState([]);
-
+const Headers = ({ headers, setHeaders }) => {
     const addHeaderHandler = () => {
         setHeaders(oldHeaders => {
             const newHeaders = [...oldHeaders, { key: '', value: '' }];
@@ -37,7 +35,7 @@ const Headers = () => {
                     return (
                         <HeaderControll
                             deleteHeader={deleteHeaderHandler}
-                            key={index}
+                            key={uuidv4()}
                             headerKey={header.key}
                             headerValue={header.value}
                             index={index}
