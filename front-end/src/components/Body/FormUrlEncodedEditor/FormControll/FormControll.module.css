@@ -1,0 +1,36 @@
+.FormControll {
+    width: 98%;
+    height: 6vh;
+    margin: auto;
+}
+
+.FormKeyValueInput, .FormValueInput {
+    font-size: 4vh;
+    border: none;
+    float: left;
+    margin-top: 0.4vh;
+    border-radius: 5px;
+    padding: 0 0.5%;
+}
+
+.FormValueInput {
+    width: 59%;
+    margin-left: 1%;
+}
+
+.FormKeyValueInput {
+    width: 30%;
+}
+
+.FormIcon {
+    font-size: 3.5vh;
+    margin-top: 0.8vh;
+    margin-left: 1%;
+    color: darkslategrey;
+    user-select: none;
+}
+
+.FormIcon:hover {
+    cursor: pointer;
+    color: black;
+}

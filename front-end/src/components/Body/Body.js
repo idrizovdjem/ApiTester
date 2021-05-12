@@ -2,9 +2,10 @@ import { useState } from 'react';
 import classes from './Body.module.css';
 
 import CodeEditor from './CodeEditor/CodeEditor';
+import FormUrlEncodedEditor from './FormUrlEncodedEditor/FormUrlEncodedEditor';
 
 const Body = ({ body, setBody }) => {
-    const [bodyType, setBodyType] = useState('json');
+    const [bodyType, setBodyType] = useState(body.type);
     const [fontSize, setFontSize] = useState('20px');
     const [fontTheme, setFontTheme] = useState('github');
 
@@ -28,7 +29,7 @@ const Body = ({ body, setBody }) => {
                     updateBody={changeBodyHandler}
                 />
             )
-            case 'form url encoded': return 'form url encoded body';
+            case 'form url encoded': return <FormUrlEncodedEditor />
             default: return null;
         }
     }
@@ -90,10 +91,10 @@ const Body = ({ body, setBody }) => {
             <div className={classes.BodyOptions}>
                 <h3 className={classes.BodyTypeLabel}>Body Type: </h3>
                 <select className={classes.BodyTypeSelect} onChange={changeBodyTypeHandler}>
-                    <option>JSON</option>
-                    <option>XML</option>
-                    <option>Form URL Encoded</option>
-                    <option>No Body</option>
+                    <option selected={body.type === 'json'} >JSON</option>
+                    <option selected={body.type === 'xml'} >XML</option>
+                    <option selected={body.type === 'form url encoded'} >Form URL Encoded</option>
+                    <option selected={body.type === 'no body'} >No Body</option>
                 </select>
 
                 <h3 className={classes.FontSizeLabel}>Font Size:</h3>
