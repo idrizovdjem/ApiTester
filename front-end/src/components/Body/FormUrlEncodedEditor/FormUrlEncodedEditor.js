@@ -13,11 +13,36 @@ const FormUrlEncodedEditor = () => {
         });
     }
 
+    const deleteFormHandler = (index) => {
+        setFormControlls(oldFormControlls => {
+            const newFormControlls = oldFormControlls.slice();
+            newFormControlls.splice(index, 1);
+            return newFormControlls;
+        });
+    }
+
+    const updateFormControllHandler = (index, updatedFormControll) => {
+        setFormControlls(oldFormControlls => {
+            const newFormControlls = oldFormControlls.slice();
+            newFormControlls[index] = updatedFormControll;
+            return newFormControlls;
+        });
+    }
+
     return (
         <div className={classes.FormUrlEncodedEditor}>
             {
-                formControlls.map(formControll => {
-                    return <FormControll key={uuidv4()} />
+                formControlls.map((formControll, index) => {
+                    return (
+                        <FormControll 
+                            key={uuidv4()} 
+                            index={index}
+                            deleteForm={deleteFormHandler} 
+                            formKey={formControll.key}
+                            formValue={formControll.value}
+                            updateFormControll={updateFormControllHandler}
+                        />
+                    );
                 })
             }
             <button onClick={addFormControllHandler} className={classes.AddFormControllButton}>Add Form Controll</button>
