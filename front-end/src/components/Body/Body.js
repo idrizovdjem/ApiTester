@@ -10,6 +10,7 @@ const Body = ({ body, setBody }) => {
     const [fontSize, setFontSize] = useState('20px');
     const [fontTheme, setFontTheme] = useState('github');
 
+    // TODO: Form url encoded add body
     const getBodyEditor = () => {
         switch (bodyType) {
             case 'json': return (
@@ -20,7 +21,7 @@ const Body = ({ body, setBody }) => {
                     body={body}
                     updateBody={changeBodyHandler}
                 />
-            )
+            );
             case 'xml': return (
                 <CodeEditor
                     bodyType='xml'
@@ -29,8 +30,8 @@ const Body = ({ body, setBody }) => {
                     body={body}
                     updateBody={changeBodyHandler}
                 />
-            )
-            case 'form url encoded': return <FormUrlEncodedEditor />
+            );
+            case 'form url encoded': return <FormUrlEncodedEditor />;
             default: return null;
         }
     }

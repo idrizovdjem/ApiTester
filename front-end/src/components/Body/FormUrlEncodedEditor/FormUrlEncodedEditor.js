@@ -6,11 +6,15 @@ import FormControll from './FormControll/FormControll';
 
 const FormUrlEncodedEditor = () => {
     const [formControlls, setFormControlls] = useState([]);
+    const [selectedFormIndex, setSelectedFormIndex] = useState(-1);
+    const [selectedFormElement, setSelectedFormElement] = useState('');
 
     const addFormControllHandler = () => {
         setFormControlls(oldFormControlls => {
             return [...oldFormControlls, { key: '', value:'' }];
         });
+
+        setSelectedFormHandler(-1, '');
     }
 
     const deleteFormHandler = (index) => {
@@ -19,6 +23,8 @@ const FormUrlEncodedEditor = () => {
             newFormControlls.splice(index, 1);
             return newFormControlls;
         });
+
+        setSelectedFormHandler(-1, '');
     }
 
     const updateFormControllHandler = (index, updatedFormControll) => {
@@ -27,6 +33,11 @@ const FormUrlEncodedEditor = () => {
             newFormControlls[index] = updatedFormControll;
             return newFormControlls;
         });
+    }
+
+    const setSelectedFormHandler = (index, element) => {
+        setSelectedFormIndex(index);
+        setSelectedFormElement(element);
     }
 
     return (
@@ -40,6 +51,9 @@ const FormUrlEncodedEditor = () => {
                             deleteForm={deleteFormHandler} 
                             formKey={formControll.key}
                             formValue={formControll.value}
+                            isSelected={selectedFormIndex === index}
+                            selectedElement={selectedFormElement}
+                            setSelectedForm={setSelectedFormHandler}
                             updateFormControll={updateFormControllHandler}
                         />
                     );

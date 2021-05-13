@@ -13,6 +13,8 @@ const Headers = ({ headers, setHeaders }) => {
             const newHeaders = [...oldHeaders, { key: '', value: '' }];
             return newHeaders;
         });
+
+        setSelectedElementHandler(-1, '');
     }
 
     const deleteHeaderHandler = (index) => {
@@ -21,6 +23,8 @@ const Headers = ({ headers, setHeaders }) => {
             newHeaders.splice(index, 1);
             return newHeaders;
         });
+
+        setSelectedElementHandler(-1, '');
     }
 
     const updateHeaderHandler = (index, header) => {

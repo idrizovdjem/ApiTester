@@ -1,29 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classes from './FormControll.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const FormControll = (props) => {
     const [formKey, setFormKey] = useState(props.formKey);
     const [formValue, setFormValue] = useState(props.formValue);
-    const [isSaved, setIsSaved] = useState(true);
+    const formKeyInput = useRef();
+    const formValueInput = useRef();
+
+    useEffect(() => {
+        if(props.isSelected) {
+            if(props.selectedElement === 'key') {
+                formKeyInput.current.focus();
+            } else if(props.selectedElement === 'value') {
+                formValueInput.current.focus();
+            }
+        }
+    }, [props]);
 
     const changeFormKeyHandler = (event) => {
         const newFormKey = event.target.value;
         setFormKey(newFormKey);
-        setIsSaved(false);
+        props.updateFormControll(props.index, { key: newFormKey, value: formValue });
     }
 
     const changeFormValueHandler = (event) => {
         const newFormValue = event.target.value;
         setFormValue(newFormValue);
-        setIsSaved(false);
-    }
-
-    const saveChangesHandler = () => {
-        props.updateFormControll(props.index, { key: formKey, value: formValue });
-        setIsSaved(true);
+        props.updateFormControll(props.index, { key: formKey, value: newFormValue });
     }
 
     return (
@@ -33,6 +39,8 @@ const FormControll = (props) => {
                 placeholder='Form Key'
                 value={formKey}
                 onChange={changeFormKeyHandler}
+                onFocus={() => props.setSelectedForm(props.index, 'key')}
+                ref={formKeyInput}
             />
 
             <input
@@ -40,13 +48,8 @@ const FormControll = (props) => {
                 placeholder='Form Value'
                 value={formValue}
                 onChange={changeFormValueHandler}
-            />
-
-            <FontAwesomeIcon
-                style={{ color: isSaved ? 'darkslategrey' : 'aliceblue' }}
-                icon={faSave}
-                className={classes.FormIcon}
-                onClick={saveChangesHandler}
+                onFocus={() => props.setSelectedForm(props.index, 'value')}
+                ref={formValueInput}
             />
 
             <FontAwesomeIcon
