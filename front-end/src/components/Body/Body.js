@@ -31,7 +31,12 @@ const Body = ({ body, setBody }) => {
                     updateBody={changeBodyHandler}
                 />
             );
-            case 'form url encoded': return <FormUrlEncodedEditor />;
+            case 'form url encoded': return (
+                <FormUrlEncodedEditor 
+                    body={body}
+                    updateBody={changeBodyHandler}
+                />
+            );
             default: return null;
         }
     }

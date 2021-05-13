@@ -4,14 +4,16 @@ import classes from './FormUrlEncodedEditor.module.css';
 
 import FormControll from './FormControll/FormControll';
 
-const FormUrlEncodedEditor = () => {
-    const [formControlls, setFormControlls] = useState([]);
+const FormUrlEncodedEditor = (props) => {
+    const [formControlls, setFormControlls] = useState(props.body.value);
     const [selectedFormIndex, setSelectedFormIndex] = useState(-1);
     const [selectedFormElement, setSelectedFormElement] = useState('');
 
     const addFormControllHandler = () => {
         setFormControlls(oldFormControlls => {
-            return [...oldFormControlls, { key: '', value:'' }];
+            const newFormControlls = [...oldFormControlls, { key: '', value: '' }];
+            props.updateBody(newFormControlls);
+            return newFormControlls;
         });
 
         setSelectedFormHandler(-1, '');
@@ -21,6 +23,7 @@ const FormUrlEncodedEditor = () => {
         setFormControlls(oldFormControlls => {
             const newFormControlls = oldFormControlls.slice();
             newFormControlls.splice(index, 1);
+            props.updateBody(newFormControlls);
             return newFormControlls;
         });
 
@@ -31,6 +34,7 @@ const FormUrlEncodedEditor = () => {
         setFormControlls(oldFormControlls => {
             const newFormControlls = oldFormControlls.slice();
             newFormControlls[index] = updatedFormControll;
+            props.updateBody(newFormControlls);
             return newFormControlls;
         });
     }
