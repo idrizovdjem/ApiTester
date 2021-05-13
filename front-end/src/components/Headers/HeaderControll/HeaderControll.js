@@ -1,29 +1,36 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import classes from './HeaderControll.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const HeaderControll = (props) => {
     const [headerKey, setHeaderKey] = useState(props.headerKey);
     const [headerValue, setHeaderValue] = useState(props.headerValue);
-    const [isSaved, setIsSaved] = useState(true);
+    const headerKeyInput = useRef();
+    const headerValueInput = useRef();
+
+    useEffect(() => {
+        if(props.isSelected) {
+            if(props.selectedInput === 'key') {
+                headerKeyInput.current.focus();
+            } else if(props.selectedInput === 'value') {
+                headerValueInput.current.focus();
+            }
+        }
+    }, [props]);
 
     const changeHeaderKeyHandler = (event) => {
         const newHeaderKey = event.target.value;
         setHeaderKey(newHeaderKey);
-        setIsSaved(false);
+        props.updateHeader(props.index, { key: newHeaderKey, value: headerValue });
     }
 
     const changeHeaderValueHandler = (event) => {
         const newHeaderValue = event.target.value;
         setHeaderValue(newHeaderValue);
-        setIsSaved(false);
-    }
+        props.updateHeader(props.index, { key: headerKey, value: newHeaderValue });
 
-    const saveHeaderChangesHandler = () => {
-        props.updateHeader(props.index, { key: headerKey, value: headerValue });
-        setIsSaved(true);
     }
 
     return (
@@ -33,6 +40,8 @@ const HeaderControll = (props) => {
                 placeholder='Header Key'
                 value={headerKey}
                 onChange={changeHeaderKeyHandler}
+                onFocus={() => props.setSelectedElement(props.index, 'key')}
+                ref={headerKeyInput}
             />
 
             <input
@@ -40,13 +49,8 @@ const HeaderControll = (props) => {
                 placeholder='Header Value'
                 value={headerValue}
                 onChange={changeHeaderValueHandler}
-            />
-
-            <FontAwesomeIcon
-                style={{ color: isSaved ? 'darkslategrey' : 'aliceblue' }}
-                onClick={saveHeaderChangesHandler}
-                icon={faSave}
-                className={classes.HeaderIcon}
+                onFocus={() => props.setSelectedElement(props.index, 'value')}
+                ref={headerValueInput}
             />
 
             <FontAwesomeIcon

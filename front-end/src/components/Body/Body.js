@@ -90,11 +90,11 @@ const Body = ({ body, setBody }) => {
         <div className={classes.Body}>
             <div className={classes.BodyOptions}>
                 <h3 className={classes.BodyTypeLabel}>Body Type: </h3>
-                <select className={classes.BodyTypeSelect} onChange={changeBodyTypeHandler}>
-                    <option selected={body.type === 'json'} >JSON</option>
-                    <option selected={body.type === 'xml'} >XML</option>
-                    <option selected={body.type === 'form url encoded'} >Form URL Encoded</option>
-                    <option selected={body.type === 'no body'} >No Body</option>
+                <select value={body.type} className={classes.BodyTypeSelect} onChange={changeBodyTypeHandler}>
+                    <option value='json'>JSON</option>
+                    <option value='xml'>XML</option>
+                    <option value='form url encoded'>Form URL Encoded</option>
+                    <option value='no body'>No Body</option>
                 </select>
 
                 <h3 className={classes.FontSizeLabel}>Font Size:</h3>

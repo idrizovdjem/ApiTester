@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import classes from './Headers.module.css';
 
 import HeaderControll from './HeaderControll/HeaderControll';
 
 const Headers = ({ headers, setHeaders }) => {
+    const [selectedHeaderIndex, setSelectedHeaderIndex] = useState(-1);
+    const [selectedHeaderInput, setSelectedHeaderInput] = useState('');
+
     const addHeaderHandler = () => {
         setHeaders(oldHeaders => {
             const newHeaders = [...oldHeaders, { key: '', value: '' }];
@@ -27,6 +31,11 @@ const Headers = ({ headers, setHeaders }) => {
         });
     }
 
+    const setSelectedElementHandler = (index, element) => {
+        setSelectedHeaderIndex(index);
+        setSelectedHeaderInput(element);
+    }
+
     return (
         <div className={classes.Headers}>
             <h3 className={classes.HeadersLabel}>Headers</h3>
@@ -39,7 +48,10 @@ const Headers = ({ headers, setHeaders }) => {
                             headerKey={header.key}
                             headerValue={header.value}
                             index={index}
+                            isSelected={selectedHeaderIndex === index}
+                            selectedInput={selectedHeaderInput}
                             updateHeader={updateHeaderHandler}
+                            setSelectedElement={setSelectedElementHandler}
                         />
                     );
                 })
