@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import classes from './Body.module.css';
 
+import BodySidebar from './BodySidebar/BodySidebar';
 import CodeEditor from './CodeEditor/CodeEditor';
 import FormUrlEncodedEditor from './FormUrlEncodedEditor/FormUrlEncodedEditor';
 
@@ -41,77 +42,17 @@ const Body = ({ body, setBody }) => {
         });
     }
 
-    const changeFontSizeHandler = (event) => {
-        const newValue = event.target.value;
-        if (newValue.endsWith('px') === false) {
-            return;
-        }
-
-        const integerPart = newValue.substr(0, newValue.length - 2);
-        if (integerPart === '') {
-            setFontSize('px');
-            return;
-        }
-
-        const pixelsValue = parseInt(integerPart);
-        if (Number.isNaN(pixelsValue)) {
-            return;
-        }
-
-        if (pixelsValue < 1) {
-            return;
-        }
-
-        setFontSize(newValue);
-    }
-
-    const changeBodyTypeHandler = (event) => {
-        const newBodyType = event.target.value.toLowerCase();
-        setBodyType(newBodyType);
-        setBody(oldBody => {
-            oldBody.type = newBodyType;
-            
-            if(newBodyType === 'form url encoded') {
-                oldBody.value = [];
-            } else if(newBodyType === 'json' || newBodyType === 'xml') {
-                oldBody.value = '';
-            }
-
-            return oldBody;
-        });
-    }
-
-    const changeThemeHandler = (event) => {
-        const newTheme = event.target.value.toLowerCase();
-        setFontTheme(newTheme);
-    }
-
     return (
         <div className={classes.Body}>
-            <div className={classes.BodyOptions}>
-                <h3 className={classes.BodyTypeLabel}>Body Type: </h3>
-                <select value={body.type} className={classes.BodyTypeSelect} onChange={changeBodyTypeHandler}>
-                    <option value='json'>JSON</option>
-                    <option value='xml'>XML</option>
-                    <option value='form url encoded'>Form URL Encoded</option>
-                    <option value='no body'>No Body</option>
-                </select>
-
-                <h3 className={classes.FontSizeLabel}>Font Size:</h3>
-                <input className={classes.FontSizeInput} value={fontSize} onChange={changeFontSizeHandler} />
-
-                <h3 className={classes.FontThemeLabel}>Font Theme:</h3>
-                <select onChange={changeThemeHandler} className={classes.ThemeSelect}>
-                    <option>Github</option>
-                    <option>Chaos</option>
-                    <option>Eclipse</option>
-                    <option>XCode</option>
-                    <option>Cobalt</option>
-                    <option>Dracula</option>
-                    <option>Iplastic</option>
-
-                </select>
-            </div>
+            <BodySidebar 
+                bodyType={body.type}
+                fontSize={fontSize}
+                fontTheme={fontTheme}
+                setBodyType={setBodyType}
+                setBody={setBody}
+                setFontSize={setFontSize}
+                setFontTheme={setFontTheme}
+            />
 
             {getBodyEditor()}
         </div>
