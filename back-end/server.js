@@ -1,15 +1,28 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const app = express();
-const port = 8000;
+const { sendRequest } = require('./requestsService.js');
 
+const app = express();
+const port = process.env.PORT;
+
+app.use(express.urlencoded());
+app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-	res.json({ ok: true });
+app.post('/', async (request, response) => {
+	const { requestObject } = request.body;
+	const awayResponse = await sendRequest(requestObject);
+	response.json({ awayResponse });
+});
+
+app.get('/status', (request, response) => {
+	// action used for waking up the server
+	// (this is because the server will be hosted as free tier project on Glitch)
+	response.json({ status: 'ok' });
 });
 
 app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
+	console.log(`listening on port: ${port}`);
 });
