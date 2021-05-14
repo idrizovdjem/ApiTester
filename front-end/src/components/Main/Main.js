@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import classes from './Main.module.css';
 
 import requestsService from '../../services/requestsService';
@@ -43,6 +44,11 @@ const Main = () => {
         requestsService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
 
         requestObject.body = requestsService.attachBody(body);
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
     }
 
     // TODO: Implement errors visualisation

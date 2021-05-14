@@ -5,7 +5,6 @@ const SideBar = () => {
         <aside className={classes.SideBar}>
             <h3 className={classes.HistoryLabel}>History</h3>
             <div className={classes.HistoryContainer}>
-
             </div>
         </aside>
     )
