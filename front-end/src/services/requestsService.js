@@ -38,13 +38,13 @@ const validateHeaderLine = (method, url) => {
 }
 
 const prepareHeaders = (headers) => {
-    const resultHeaders = [];
+    const resultHeaders = {};
 
     for (const header of headers) {
         const { key, value } = header;
 
         if(isHeaderValid(key, value) && isHeaderAlreadyAdded(resultHeaders, key) === false) {
-            resultHeaders.push(header);
+            resultHeaders[key] = value.toString();
         }
     }
 
@@ -56,7 +56,7 @@ const isHeaderValid = (key, value) => {
 }
 
 const isHeaderAlreadyAdded = (headers, key) => {
-    return headers.some(header => header.key === key);
+    return Object.hasOwnProperty(key);
 }
 
 const addDefaultHeaders = (headers, host, body) => {
@@ -67,7 +67,7 @@ const addDefaultHeaders = (headers, host, body) => {
         },
         {
             key: 'content-length',
-            value: Buffer.byteLength(body.value)
+            value: Buffer.byteLength(body.value).toString()
         },
         {
             key: 'user-agent',
@@ -85,7 +85,7 @@ const addDefaultHeaders = (headers, host, body) => {
 
     for(const defaultHeader of defaultHeaders) {
         if(isHeaderAlreadyAdded(headers, defaultHeader.key) === false) {
-            headers.push(defaultHeader);
+            headers[defaultHeader.key] = defaultHeader.value;
         }
     }
 
@@ -120,7 +120,7 @@ const requestsService = {
     validateHeaderLine,
     addDefaultHeaders,
     prepareHeaders,
-    attachBody
+    attachBody,
 };
 
 export default requestsService;

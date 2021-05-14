@@ -25,10 +25,11 @@ const Main = () => {
         }
     }
 
-    const sendRequestHandler = () => {
+    const sendRequestHandler = async () => {
         const requestObject = {
             method,
-            httpVersion: 'HTTP/1.1'
+            httpVersion: 'HTTP/1.1',
+            url
         };
 
         const headerLineValidationResult = requestsService.validateHeaderLine(method, url);
@@ -42,13 +43,32 @@ const Main = () => {
 
         requestObject.headers = requestsService.prepareHeaders(headers);
         requestsService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
-
+        
         requestObject.body = requestsService.attachBody(body);
 
-        fetch(url)
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
+        const response = await axios.post('https://apple-viridian-trilby.glitch.me/', { requestObject });
+        console.log(response.data);
+
+        // fetch('https://apple-viridian-trilby.glitch.me/', {
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ requestObject })
+        // })
+        // .then(response => {
+        //     responseObject.response = response;
+        //     return response.json();
+        // })
+        // .then(data => {
+        //     responseObject.data = data;
+        //     console.log(responseObject);
+        // })
+        // .catch(error => {
+        //     responseObject.error = error;
+        //     console.log(responseObject);
+        // });
+
     }
 
     // TODO: Implement errors visualisation
