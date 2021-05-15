@@ -3,13 +3,38 @@
     background-color: #116530;
     user-select: none;
     height: 6vh;
+    float: left;
 }
 
 .Logo {
+    float: left;
     margin: 0;
     color: white;
     font-size: 4vh;
     padding-bottom: 5px;
     padding-left: 5.5%;
     cursor: pointer;
+}
+
+.ServerStatusContainer {
+    width: 20%;
+    margin-top: 0.5vh;
+    float: right;
+    margin-right: 1vh;
+    height: 5vh;
+    border-radius: 5px;
+    background-color: white;
+    text-align: center;
+}
+
+.ServerStatusText {
+    font-size: 4vh;
+    margin: 0;
+    padding: 0;
+    margin-left: -1vh;
+    margin-top: -0.3vh;
+}
+
+.ServerStatusLabel {
+    margin-left: 1vh;
 }

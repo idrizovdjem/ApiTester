@@ -1,0 +1,1 @@
+export const ServerURL = 'https://api-tester-server.glitch.me/';

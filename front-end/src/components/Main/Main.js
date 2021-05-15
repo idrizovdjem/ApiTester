@@ -3,6 +3,7 @@ import axios from 'axios';
 import classes from './Main.module.css';
 
 import requestsService from '../../services/requestsService';
+import { ServerURL } from '../../constants/RequestConstants';
 
 import Search from '../Search/Search';
 import SectionButtonsContainer from '../SectionButtonsContainer/SectionButtonsContainer';
@@ -46,8 +47,7 @@ const Main = () => {
         
         requestObject.body = requestsService.attachBody(body);
 
-        const response = await axios.post('https://apple-viridian-trilby.glitch.me/', { requestObject });
-        console.log(response.data);
+        const response = await axios.post(ServerURL, { requestObject });
 
         // fetch('https://apple-viridian-trilby.glitch.me/', {
         //     method: 'post',
