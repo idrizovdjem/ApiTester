@@ -1,4 +1,5 @@
 import utilitiesService from './utilitiesService';
+import headersService from './headersService';
 
 const allowedMethods = ['get', 'post', 'put', 'delete'];
 
@@ -12,13 +13,6 @@ const validateHeaderLine = (method, url) => {
     if (url === '') {
         utilitiesService.addErroMessage(validateResult, 'Destination URL cannot be empty');
     } else {
-        // https://www.bing.com/search?q=swapi
-        // first step - split url into (host, path)
-        // second step - validate host and path
-
-        // host - www.bing.com
-        // path - /search?q=swapi
-
         const urlObject = new URL(url);
         const path = urlObject.pathname + urlObject.search;
         const port = urlObject.port;
@@ -37,71 +31,6 @@ const validateHeaderLine = (method, url) => {
     return validateResult;
 }
 
-const prepareHeaders = (headers) => {
-    const resultHeaders = {};
-
-    for (const header of headers) {
-        const { key, value } = header;
-
-        if(isHeaderValid(key, value) && isHeaderAlreadyAdded(resultHeaders, key) === false) {
-            resultHeaders[key] = value.toString();
-        }
-    }
-
-    return resultHeaders;
-}
-
-const isHeaderValid = (key, value) => {
-    return key !== '' && value !== '';
-}
-
-const isHeaderAlreadyAdded = (headers, key) => {
-    return Object.hasOwnProperty(key);
-}
-
-const addDefaultHeaders = (headers, host, body) => {
-    const defaultHeaders = [
-        {
-            key: 'accept',
-            value: '*/*'
-        },
-        {
-            key: 'content-length',
-            value: Buffer.byteLength(body.value).toString()
-        },
-        {
-            key: 'user-agent',
-            value: 'ApiTester'
-        },
-        {
-            key: 'host',
-            value: host
-        },
-        {
-            key: 'content-type',
-            value: getContentType(body.type)
-        }
-    ];
-
-    for(const defaultHeader of defaultHeaders) {
-        if(isHeaderAlreadyAdded(headers, defaultHeader.key) === false) {
-            headers[defaultHeader.key] = defaultHeader.value;
-        }
-    }
-
-    return headers;
-}
-
-const getContentType = (bodyType) => {
-    if(bodyType === 'json' || bodyType === 'xml') {
-        return bodyType;
-    } else if(bodyType === 'no body') {
-        return '';
-    } else if(bodyType === 'form url encoded') {
-        return 'x-www-form-urlencoded';
-    }
-}
-
 const attachBody = (body) => {
     const replaceRegex = /\s*/gm;
     let newBodyValue = '';
@@ -116,10 +45,42 @@ const attachBody = (body) => {
     return newBodyValue;
 }
 
+const prepareRequest = ({ method, url, body, headers }) => {
+    const validationResult = utilitiesService.buildValidateResult();
+
+    // initialize request object
+    const requestObject = {
+        method,
+        httpVersion: 'HTTP/1.1',
+        url
+    };
+    
+    // validate the headers line
+    const headerLineValidationResult = validateHeaderLine(method, url);
+    if(headerLineValidationResult.ok === false) {
+        for(const errorMessage of headerLineValidationResult.errorMessages) {
+            utilitiesService.addErroMessage(validationResult, errorMessage);
+        }
+
+        return validationResult;
+    }
+
+    requestObject.path = headerLineValidationResult.data.path;
+    requestObject.host = headerLineValidationResult.data.host;
+
+    // prepare and add headers to the request object
+    requestObject.headers = headersService.prepareHeaders(headers);
+    headersService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
+    
+    requestObject.body = attachBody(body);
+
+    validationResult.data.requestObject = requestObject;
+    return validationResult;
+}
+
 const requestsService = {
     validateHeaderLine,
-    addDefaultHeaders,
-    prepareHeaders,
+    prepareRequest,
     attachBody,
 };
 

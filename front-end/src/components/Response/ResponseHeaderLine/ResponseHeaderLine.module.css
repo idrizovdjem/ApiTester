@@ -1,0 +1,20 @@
+.ResponseStatus {
+    width: 98%;
+    height: 5vh;
+    font-size: 4vh;
+    margin-left: 2vh;
+    padding-top: 1vh;
+}
+
+.ResponseStatusLabel {
+    float: left;
+}
+
+.ResponseStatusCode {
+    background-color: white;
+    width: 6%;
+    text-align: center;
+    margin: 0 1vh;
+    border-radius: 5px;
+    float: left;
+}
