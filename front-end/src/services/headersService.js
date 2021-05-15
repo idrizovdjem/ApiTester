@@ -63,7 +63,12 @@ const getContentType = (bodyType) => {
     }
 }
 
+const getBodyType = (headers) => {
+    // TODO: Implement
+}
+
 const headersService = {
+    getBodyType,
     prepareHeaders,
     addDefaultHeaders
 };

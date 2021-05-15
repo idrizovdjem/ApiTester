@@ -2,7 +2,7 @@ import classes from './ResponseBody.module.css';
 
 import CodeEditor from '../../CodeEditor/CodeEditor';
 
-const ResponseBody = () => {
+const ResponseBody = ({ body }) => {
     const responseBodyEditorStyle = {
         marginTop: '1vh',
         width: '98%',
@@ -20,8 +20,7 @@ const ResponseBody = () => {
                 bodyType='json'
                 fontSize={'20px'}
                 theme={'github'}
-                body={'123'}
-                updateBody={() => { }}
+                body={body}
                 style={responseBodyEditorStyle}
                 isReadOnly
             />

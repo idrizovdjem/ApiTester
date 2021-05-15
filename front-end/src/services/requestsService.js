@@ -1,6 +1,9 @@
 import utilitiesService from './utilitiesService';
 import headersService from './headersService';
 
+import axios from 'axios';
+import { ServerURL } from '../constants/RequestConstants';
+
 const allowedMethods = ['get', 'post', 'put', 'delete'];
 
 const validateHeaderLine = (method, url) => {
@@ -35,9 +38,9 @@ const attachBody = (body) => {
     const replaceRegex = /\s*/gm;
     let newBodyValue = '';
 
-    if(body.type === 'json' || body.type === 'xml') {
+    if (body.type === 'json' || body.type === 'xml') {
         newBodyValue = body.value.replace(replaceRegex, '');
-    } else if(body.type === 'form url encoded') {
+    } else if (body.type === 'form url encoded') {
         const formValues = body.value.map(form => `${escape(form.key)}=${escape(form.value)}`);
         newBodyValue = formValues.join('&');
     }
@@ -54,11 +57,11 @@ const prepareRequest = ({ method, url, body, headers }) => {
         httpVersion: 'HTTP/1.1',
         url
     };
-    
+
     // validate the headers line
     const headerLineValidationResult = validateHeaderLine(method, url);
-    if(headerLineValidationResult.ok === false) {
-        for(const errorMessage of headerLineValidationResult.errorMessages) {
+    if (headerLineValidationResult.ok === false) {
+        for (const errorMessage of headerLineValidationResult.errorMessages) {
             utilitiesService.addErroMessage(validationResult, errorMessage);
         }
 
@@ -71,17 +74,23 @@ const prepareRequest = ({ method, url, body, headers }) => {
     // prepare and add headers to the request object
     requestObject.headers = headersService.prepareHeaders(headers);
     headersService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
-    
+
     requestObject.body = attachBody(body);
 
     validationResult.data.requestObject = requestObject;
     return validationResult;
 }
 
+const sendRequest = async (requestObject) => {
+    const response = await axios.post(ServerURL, { requestObject });
+    return response;
+}
+
 const requestsService = {
     validateHeaderLine,
     prepareRequest,
-    attachBody,
+    sendRequest,
+    attachBody
 };
 
 export default requestsService;

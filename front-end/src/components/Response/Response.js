@@ -4,12 +4,14 @@ import ResponseHeaderLine from './ResponseHeaderLine/ResponseHeaderLine';
 import ResponseHeaders from './ResponseHeaders/ResponseHeaders';
 import ResponseBody from './ResponseBody/ResponseBody';
 
-const Response = () => {
+const Response = ({ response }) => {
+    const { statusCode, statusText, headers, body } = response;
+
     return (
         <div className={classes.Response}>
-            <ResponseHeaderLine />
-            <ResponseHeaders />
-            <ResponseBody />
+            <ResponseHeaderLine statusCode={statusCode} statusText={statusText} />
+            <ResponseHeaders headers={headers} />
+            <ResponseBody body={body} />
         </div>
     );
 }

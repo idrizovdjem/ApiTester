@@ -22,7 +22,6 @@ const Body = ({ body, setBody }) => {
         switch (bodyType) {
             case 'json': return (
                 <CodeEditor
-                    bodyType='json'
                     fontSize={fontSize}
                     theme={fontTheme}
                     body={body}
@@ -32,7 +31,6 @@ const Body = ({ body, setBody }) => {
             );
             case 'xml': return (
                 <CodeEditor
-                    bodyType='xml'
                     fontSize={fontSize}
                     theme={fontTheme}
                     body={body}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import classes from './Main.module.css';
 
 import requestsService from '../../services/requestsService';
+import headersService from '../../services/headersService';
 
 import Search from '../Search/Search';
 import SectionButtonsContainer from '../SectionButtonsContainer/SectionButtonsContainer';
@@ -15,13 +16,22 @@ const Main = () => {
     const [headers, setHeaders] = useState([]);
     const [body, setBody] = useState({ type: 'json', value: '' });
     const [currentTab, setCurrentTab] = useState('Response');
+    const [response, setResponse] = useState({
+        statusCode: 0,
+        statusText: '',
+        headers: [],
+        body: {
+            type: '',
+            value: ''
+        }
+    });
     const [errors, setErrors] = useState([]);
 
     const getCurrentTab = () => {
         switch(currentTab) {
             case 'Headers': return <Headers headers={headers} setHeaders={setHeaders} />;
             case 'Body': return <Body body={body} setBody={setBody} />;
-            case 'Response': return <Response />
+            case 'Response': return <Response response={response} />
             default: return <Headers headers={headers} setHeaders={setHeaders} />;
         }
     }
@@ -32,7 +42,19 @@ const Main = () => {
             setErrors(result.errorMessages);
         }
 
-        // TODO: MAKE REQUEST
+        const responseObject = await requestsService.sendRequest(result.data.requestObject);
+        console.log(responseObject);
+        // const bodyType = headersService.getBodyType(responseObject.headers);
+
+        setResponse({
+            statusCode: responseObject.statusCode,
+            statusText: responseObject.statusText,
+            headers: response.headers,
+            body: {
+                type: 'json',
+                value: ''
+            }
+        });
     }
 
     // TODO: Implement errors visualisation

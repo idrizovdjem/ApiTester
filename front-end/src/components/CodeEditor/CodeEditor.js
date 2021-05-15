@@ -15,7 +15,7 @@ const CodeEditor = (props) => {
     return (
         <AceEditor
             readOnly={props.isReadOnly}
-            mode={props.bodyType}
+            mode={props.body.type}
             theme={props.theme}
             value={props.body.value}
             onChange={(newBody) => props.updateBody(newBody)}

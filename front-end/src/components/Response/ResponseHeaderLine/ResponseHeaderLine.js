@@ -1,11 +1,11 @@
 import classes from './ResponseHeaderLine.module.css';
 
-const ResponseHeaderLine = () => {
+const ResponseHeaderLine = ({ statusCode, statusText }) => {
     return (
         <div className={classes.ResponseStatus}>
             <div className={classes.ResponseStatusLabel}>Response Status: </div>
-            <div className={classes.ResponseStatusCode}>200</div>
-            <div>OK</div>
+            <div className={classes.ResponseStatusCode}>{statusCode}</div>
+            <div>{statusText}</div>
         </div>
     );
 }
