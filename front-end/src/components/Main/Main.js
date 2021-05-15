@@ -14,7 +14,7 @@ const Main = () => {
     const [url, setUrl] = useState('');
     const [headers, setHeaders] = useState([]);
     const [body, setBody] = useState({ type: 'json', value: '' });
-    const [currentTab, setCurrentTab] = useState('Body');
+    const [currentTab, setCurrentTab] = useState('Response');
     const [errors, setErrors] = useState([]);
 
     const getCurrentTab = () => {

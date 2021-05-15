@@ -1,0 +1,43 @@
+.ResponseHeaders {
+    width: 100%;
+}
+
+.ResponseHeadersLabel {
+    font-size: 4vh;
+    float: left;
+    width: 98%;
+    margin-left: 1%;
+}
+
+.ResponseHeaderTable {
+    float: left;
+    width: 100%;
+}
+
+.ResponseHeadersTableRow {
+    width: 98%;
+    margin-left: 1%;
+    height: 5.4vh;
+}
+
+.ResponseHeadersTableName {
+    width: 29%;
+    font-size: 4vh;
+    float: left;
+    padding-left: 1%;
+}
+
+.ResponseHeadersTableValue {
+    width: 69%;
+    font-size: 4vh;
+    float: left;
+    padding-left: 1%;
+}
+
+.EvenRow {
+    background-color: aliceblue;
+}
+
+.OddRow {
+    background-color: lightgray;
+}

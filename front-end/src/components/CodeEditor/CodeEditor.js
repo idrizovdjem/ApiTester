@@ -14,18 +14,14 @@ import "ace-builds/src-noconflict/theme-cobalt";
 const CodeEditor = (props) => {    
     return (
         <AceEditor
+            readOnly={props.isReadOnly}
             mode={props.bodyType}
             theme={props.theme}
             value={props.body.value}
             onChange={(newBody) => props.updateBody(newBody)}
             fontSize={props.fontSize}
             editorProps={{ $blockScrolling: true }}
-            style={{
-                marginTop: '1vh',
-                width: '74%',
-                float: 'left',
-                height: '75vh'
-            }}
+            style={props.style}
         />
     );
 }

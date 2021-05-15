@@ -4,4 +4,5 @@
     height: 77vh;
     background-color: #81B622;
     border-radius: 5px;
+    overflow-y: auto;
 }
