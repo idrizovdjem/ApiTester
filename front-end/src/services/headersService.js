@@ -64,7 +64,23 @@ const getContentType = (bodyType) => {
 }
 
 const getBodyType = (headers) => {
-    // TODO: Implement
+    const contentTypeHeader = headers['content-type'];
+    
+    switch(contentTypeHeader) {
+        case 'text/css': return 'css';
+        case 'image/gif': return 'gif';
+        case 'text/html': return 'html';
+        case 'image/vnd.microsoft.icon': return 'ico';
+        case 'image/jpeg': return 'jpeg';
+        case 'text/javascript': return 'javascript';
+        case 'application/json': return 'json';
+        case 'image/png': return 'png';
+        case 'application/pdf': return 'pdf';
+        case 'text/plain': return 'text';
+        case 'application/xml': return 'xml';
+        case 'text/xml': return 'xml';
+        default: return 'text';
+    }
 }
 
 const headersService = {

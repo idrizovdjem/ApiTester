@@ -43,16 +43,15 @@ const Main = () => {
         }
 
         const responseObject = await requestsService.sendRequest(result.data.requestObject);
-        console.log(responseObject);
-        // const bodyType = headersService.getBodyType(responseObject.headers);
+        const bodyType = headersService.getBodyType(responseObject.data.headers);
 
         setResponse({
             statusCode: responseObject.statusCode,
             statusText: responseObject.statusText,
             headers: response.headers,
             body: {
-                type: 'json',
-                value: ''
+                type: bodyType,
+                value: responseObject.data.body
             }
         });
     }
