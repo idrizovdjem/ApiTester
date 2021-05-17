@@ -2,6 +2,7 @@
     width: 98%;
     margin-left: 1%;
     user-select: none;
+    overflow: auto;
 }
 
 .ResponseHeadersTableRow:hover {
@@ -33,8 +34,7 @@
 
 .ToggledHeaderValue {
     float: left;
-    width: 100%;
+    width: 98%;
     font-size: 4vh;
-    padding-left: 2vh;
-    overflow-y: auto;
+    padding-left: 2vh;    
 }

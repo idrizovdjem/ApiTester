@@ -79,7 +79,7 @@ const getBodyType = (headers) => {
         case 'text/plain': return 'text';
         case 'application/xml': return 'xml';
         case 'text/xml': return 'xml';
-        default: return 'text';
+        default: return 'none';
     }
 }
 

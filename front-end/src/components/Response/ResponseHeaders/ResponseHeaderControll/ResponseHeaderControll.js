@@ -26,14 +26,11 @@ const ResponseHeaderControll = (props) => {
         headerValueElement = <div className={classes.ResponseHeadersTableValue}>{headerValue}</div>;
     }
 
-    const height = isToggled ? '20vh' : '5.4vh';
-
     return (
         <div
             key={props.index}
             className={`${classes.ResponseHeadersTableRow} ${rowColorClass}`}
             onClick={() => setIsToggled(oldState => !oldState)}
-            style={{ height }}
         >
             <div className={classes.ResponseHeadersTableName}>{props.headerKey}</div>
             {headerValueElement}

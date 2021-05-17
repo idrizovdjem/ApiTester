@@ -50,12 +50,14 @@ const Main = () => {
             value: responseObject.data.body
         };
 
-        if(bodyType === 'json') {
+        if(bodyType === 'none') {
+            responseBody.value = '';
+        } else if(bodyType === 'json') {
             responseBody.value = JSON.stringify(responseObject.data.body)
         }
 
         setResponse({
-            statusCode: responseObject.status,
+            statusCode: responseObject.data.statusCode,
             statusText: responseObject.data.statusText,
             headers: responseObject.data.headers,
             body: responseBody
