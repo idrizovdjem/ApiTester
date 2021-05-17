@@ -7,7 +7,7 @@ const ResponseBody = ({ body }) => {
         marginTop: '1vh',
         width: '98%',
         float: 'left',
-        height: '50vh',
+        height: '58vh',
         marginLeft: '1%',
         marginBottom: '1%'
     };

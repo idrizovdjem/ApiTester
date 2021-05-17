@@ -8,7 +8,7 @@ const SectionButtonsContainer = (props) => {
         [
             {
                 text: 'Headers',
-                isActive: true
+                isActive: false
             },
             {
                 text: 'Body',
@@ -24,6 +24,9 @@ const SectionButtonsContainer = (props) => {
             }
         ]
     );
+
+    const selectedButton = buttons.find(button => button.text === props.currentTab);
+    selectedButton.isActive = true;
 
     const changeActiveButtonHandler = (buttonText) => {
         setButtons(oldButtonsState => {

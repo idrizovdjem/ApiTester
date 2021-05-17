@@ -45,15 +45,23 @@ const Main = () => {
         const responseObject = await requestsService.sendRequest(result.data.requestObject);
         const bodyType = headersService.getBodyType(responseObject.data.headers);
 
+        const responseBody = {
+            type: bodyType,
+            value: responseObject.data.body
+        };
+
+        if(bodyType === 'json') {
+            responseBody.value = JSON.stringify(responseObject.data.body)
+        }
+
         setResponse({
-            statusCode: responseObject.statusCode,
-            statusText: responseObject.statusText,
-            headers: response.headers,
-            body: {
-                type: bodyType,
-                value: responseObject.data.body
-            }
+            statusCode: responseObject.status,
+            statusText: responseObject.data.statusText,
+            headers: responseObject.data.headers,
+            body: responseBody
         });
+
+        setCurrentTab('Response');
     }
 
     // TODO: Implement errors visualisation
@@ -68,7 +76,7 @@ const Main = () => {
                 sendRequest={sendRequestHandler}
             />
 
-            <SectionButtonsContainer selectTab={setCurrentTab} />
+            <SectionButtonsContainer selectTab={setCurrentTab} currentTab={currentTab} />
             {getCurrentTab()}
         </main>
     );

@@ -11,7 +11,7 @@ const Response = ({ response }) => {
         <div className={classes.Response}>
             <ResponseHeaderLine statusCode={statusCode} statusText={statusText} />
             <ResponseHeaders headers={headers} />
-            <ResponseBody body={body} />
+            <ResponseBody body={body ? body : ''} />
         </div>
     );
 }
