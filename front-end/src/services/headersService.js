@@ -64,7 +64,7 @@ const getContentType = (bodyType) => {
 }
 
 const getBodyType = (headers) => {
-    const contentTypeHeader = headers['content-type'];
+    const contentTypeHeader = headers['content-type']?.split('; ')[0];
     
     switch(contentTypeHeader) {
         case 'text/css': return 'css';

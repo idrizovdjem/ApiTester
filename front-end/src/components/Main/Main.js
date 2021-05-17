@@ -11,6 +11,7 @@ import Body from '../Body/Body';
 import Response from '../Response/Response';
 
 const Main = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [method, setMethod] = useState('get');
     const [url, setUrl] = useState('');
     const [headers, setHeaders] = useState([]);
@@ -21,26 +22,28 @@ const Main = () => {
         statusText: '',
         headers: [],
         body: {
-            type: '',
+            type: 'text',
             value: ''
         }
     });
     const [errors, setErrors] = useState([]);
 
     const getCurrentTab = () => {
-        switch(currentTab) {
+        switch (currentTab) {
             case 'Headers': return <Headers headers={headers} setHeaders={setHeaders} />;
             case 'Body': return <Body body={body} setBody={setBody} />;
-            case 'Response': return <Response response={response} />
+            case 'Response': return <Response response={response} isLoading={isLoading} />
             default: return <Headers headers={headers} setHeaders={setHeaders} />;
         }
     }
 
     const sendRequestHandler = async () => {
         const result = requestsService.prepareRequest({ method, url, body, headers });
-        if(result.ok === false) {
+        if (result.ok === false) {
             setErrors(result.errorMessages);
         }
+
+        setIsLoading(true);
 
         const responseObject = await requestsService.sendRequest(result.data.requestObject);
         const bodyType = headersService.getBodyType(responseObject.data.headers);
@@ -52,9 +55,12 @@ const Main = () => {
 
         if(bodyType === 'none') {
             responseBody.value = '';
-        } else if(bodyType === 'json') {
+            responseBody.type = 'text';
+        } else if (bodyType === 'json') {
             responseBody.value = JSON.stringify(responseObject.data.body)
         }
+
+        setIsLoading(false);
 
         setResponse({
             statusCode: responseObject.data.statusCode,
@@ -70,7 +76,7 @@ const Main = () => {
 
     return (
         <main className={classes.Main}>
-            <Search 
+            <Search
                 method={method}
                 setMethod={setMethod}
                 url={url}

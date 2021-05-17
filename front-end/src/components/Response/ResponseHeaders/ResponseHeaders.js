@@ -15,6 +15,7 @@ const ResponseHeaders = ({ headers }) => {
                                 index={index}
                                 headerKey={header}
                                 headerValue={headers[header]}
+                                key={header}
                             />
                         );
                     })

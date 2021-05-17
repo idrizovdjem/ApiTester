@@ -82,8 +82,21 @@ const prepareRequest = ({ method, url, body, headers }) => {
 }
 
 const sendRequest = async (requestObject) => {
-    const response = await axios.post(ServerURL, { requestObject });
-    return response;
+    if (requestObject.url.includes('localhost')) {
+        const response = await axios.get(requestObject.url);
+        // Todo: refactor
+        return {
+            data: {
+                body: response.data,
+                headers: response.headers,
+                statusCode: response.status,
+                statusText: response.statusText
+            }
+        };
+    } else {
+        const response = await axios.post(ServerURL, { requestObject });
+        return response;
+    }
 }
 
 const requestsService = {
