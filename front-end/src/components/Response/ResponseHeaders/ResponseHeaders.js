@@ -1,5 +1,7 @@
 import classes from './ResponseHeaders.module.css';
 
+import ResponseHeaderControll from './ResponseHeaderControll/ResponseHeaderControll';
+
 const ResponseHeaders = ({ headers }) => {
     return (
         <div className={classes.ResponseHeaders}>
@@ -8,22 +10,12 @@ const ResponseHeaders = ({ headers }) => {
             <div className={classes.ResponseHeaderTable}>
                 {
                     Object.keys(headers).map((header, index) => {
-                        const rowColorClass = (index + 1) % 2 === 0 ? classes.EvenRow : classes.OddRow;
-                        
-                        let headerValue = headers[header];
-                        if(Array.isArray(headerValue)) {
-                            headerValue = headerValue.join('');
-                        }
-
-                        if(headerValue.length > 50) {
-                            headerValue = headerValue.substr(0, 50);
-                        }
-
                         return (
-                            <div key={index} className={`${classes.ResponseHeadersTableRow} ${rowColorClass}`}>
-                                <div className={classes.ResponseHeadersTableName}>{header}</div>
-                                <div className={classes.ResponseHeadersTableValue}>{headerValue}</div>
-                            </div>
+                            <ResponseHeaderControll 
+                                index={index}
+                                headerKey={header}
+                                headerValue={headers[header]}
+                            />
                         );
                     })
                 }
