@@ -1,22 +1,42 @@
+import { useState } from 'react';
 import classes from './ResponseHeaderControll.module.css';
 
 const ResponseHeaderControll = (props) => {
-    const rowColorClass = (props.index + 1) % 2 === 0 ? classes.EvenRow : classes.OddRow;
+    const [isToggled, setIsToggled] = useState(false);
 
+    const rowColorClass = (props.index + 1) % 2 === 0 ? classes.EvenRow : classes.OddRow;
     let headerValue = props.headerValue;
 
-    if(Array.isArray(headerValue)) {
+    if (Array.isArray(headerValue)) {
         headerValue = headerValue.join('');
     }
 
-    if(headerValue.length > 50) {
-        headerValue = headerValue.substr(0, 50);
+    let headerValueElement;
+    if (isToggled) {
+        headerValueElement = (
+            <div className={classes.ToggledHeaderValue}>
+                {headerValue}
+            </div>
+        );
+    } else {
+        if (headerValue.length > 50) {
+            headerValue = headerValue.substr(0, 50);
+        }
+
+        headerValueElement = <div className={classes.ResponseHeadersTableValue}>{headerValue}</div>;
     }
 
+    const height = isToggled ? '20vh' : '5.4vh';
+
     return (
-        <div key={props.index} className={`${classes.ResponseHeadersTableRow} ${rowColorClass}`}>
+        <div
+            key={props.index}
+            className={`${classes.ResponseHeadersTableRow} ${rowColorClass}`}
+            onClick={() => setIsToggled(oldState => !oldState)}
+            style={{ height }}
+        >
             <div className={classes.ResponseHeadersTableName}>{props.headerKey}</div>
-            <div className={classes.ResponseHeadersTableValue}>{headerValue}</div>
+            {headerValueElement}
         </div>
     );
 }

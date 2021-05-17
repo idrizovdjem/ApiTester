@@ -1,7 +1,7 @@
 .ResponseHeadersTableRow {
     width: 98%;
     margin-left: 1%;
-    height: 5.4vh;
+    user-select: none;
 }
 
 .ResponseHeadersTableRow:hover {
@@ -29,4 +29,12 @@
 
 .OddRow {
     background-color: lightgray;
+}
+
+.ToggledHeaderValue {
+    float: left;
+    width: 100%;
+    font-size: 4vh;
+    padding-left: 2vh;
+    overflow-y: auto;
 }
