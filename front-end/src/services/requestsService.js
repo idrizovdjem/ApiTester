@@ -39,7 +39,10 @@ const attachBody = (body) => {
     let newBodyValue = '';
 
     if (body.type === 'json' || body.type === 'xml') {
-        newBodyValue = JSON.parse(body.value.replace(replaceRegex, ''));
+        newBodyValue = body.value.replace(replaceRegex, '');
+        if(newBodyValue !== '') {
+            newBodyValue = JSON.parse(newBodyValue);
+        }
     } else if (body.type === 'form url encoded') {
         const formValues = body.value.map(form => `${escape(form.key)}=${escape(form.value)}`);
         newBodyValue = formValues.join('&');
@@ -78,7 +81,7 @@ const prepareRequest = ({ method, url, body, headers }) => {
         headersService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
     }
 
-    requestObject.body = attachBody(body);
+    requestObject.body = attachBody(body, requestObject.isLocalHost);
 
     validationResult.data.requestObject = requestObject;
     return validationResult;

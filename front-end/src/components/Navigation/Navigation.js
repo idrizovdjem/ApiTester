@@ -7,6 +7,10 @@ const Navigation = ({ serverStatus, setServerStatus }) => {
         <nav className={classes.Navigation}>
             <h3 className={classes.Logo}>Api Tester</h3>
 
+            <div className={classes.Limitations}>
+                <p className={classes.QuestionMark}>?</p>
+            </div>
+
             <div className={classes.ServerStatusContainer}>
                 <p className={classes.ServerStatusText}>Server Status: 
                     <span 
