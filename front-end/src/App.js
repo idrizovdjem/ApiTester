@@ -5,9 +5,11 @@ import utilitiesService from './services/utilitiesService';
 import Navigation from './components/Navigation/Navigation';
 import SideBar from './components/SideBar/SideBar';
 import Main from './components/Main/Main';
+import Limitations from './components/Limitations/Limitations';
 
 const App = () => {
 	const [serverStatus, setServerStatus] = useState('DOWN');
+	const [currentPage, setCurrentPage] = useState('Main');
 
 	useEffect(() => {
         const fetchServerStatus = async () => {
@@ -23,11 +25,19 @@ const App = () => {
 		}, 1000 * 180);
     });
 
+	let currentPageElement = <Main serverStatus={serverStatus} />;
+	if(currentPage === 'Limitations') {
+		currentPageElement = <Limitations />;
+	}
+
 	return (
 		<div className="App">
-			<Navigation serverStatus={serverStatus} setServerStatus={setServerStatus} />
+			<Navigation 
+				serverStatus={serverStatus} 
+				setCurrentPage={setCurrentPage}
+			/>
 			<SideBar />
-			<Main serverStatus={serverStatus} />
+			{currentPageElement}
 		</div>
 	);
 }

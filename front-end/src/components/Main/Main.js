@@ -17,6 +17,7 @@ const Main = ({ serverStatus }) => {
     const [headers, setHeaders] = useState([]);
     const [body, setBody] = useState({ type: 'json', value: '' });
     const [currentTab, setCurrentTab] = useState('Response');
+    const [errors, setErrors] = useState([]);
     const [response, setResponse] = useState({
         statusCode: 0,
         statusText: '',
@@ -26,7 +27,6 @@ const Main = ({ serverStatus }) => {
             value: ''
         }
     });
-    const [errors, setErrors] = useState([]);
 
     const getCurrentTab = () => {
         switch (currentTab) {
