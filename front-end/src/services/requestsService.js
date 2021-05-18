@@ -2,6 +2,7 @@ import utilitiesService from './utilitiesService';
 import headersService from './headersService';
 
 import axios from 'axios';
+import request from 'request';
 import { ServerURL } from '../constants/RequestConstants';
 
 const allowedMethods = ['get', 'post', 'put', 'delete'];
@@ -70,6 +71,7 @@ const prepareRequest = ({ method, url, body, headers }) => {
 
     requestObject.path = headerLineValidationResult.data.path;
     requestObject.host = headerLineValidationResult.data.host;
+    requestObject.isLocalHost = requestObject.host.includes('localhost');
 
     // prepare and add headers to the request object
     requestObject.headers = headersService.prepareHeaders(headers);
@@ -82,21 +84,24 @@ const prepareRequest = ({ method, url, body, headers }) => {
 }
 
 const sendRequest = async (requestObject) => {
-    if (requestObject.url.includes('localhost')) {
-        const response = await axios.get(requestObject.url);
-        // Todo: refactor
-        return {
-            data: {
-                body: response.data,
-                headers: response.headers,
-                statusCode: response.status,
-                statusText: response.statusText
-            }
-        };
+    if (requestObject.isLocalHost) {
+        sendLocalHostRequest(requestObject);
+        return {};
     } else {
         const response = await axios.post(ServerURL, { requestObject });
         return response;
     }
+}
+
+const sendLocalHostRequest = ({ method, url, body, headers }) => {
+    // Todo: implement
+    // fetch(url, {
+    //     headers: {
+    //         'User': 'custom'
+    //     }
+    // })
+    // .then(response => console.log(response))
+    // .catch(error => console.log(error));
 }
 
 const requestsService = {

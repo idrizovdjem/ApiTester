@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import utilitiesService from '../../services/utilitiesService';
 
 import classes from './Navigation.module.css';
 
-const Navigation = () => {
-    const [serverStatus, setServerStatus] = useState('DOWN');
-
+const Navigation = ({ serverStatus, setServerStatus }) => {
     useEffect(() => {
         const fetchServerStatus = async () => {
             const statusResponse = await utilitiesService.getServerStatus();

@@ -10,7 +10,7 @@ import Headers from '../Headers/Headers';
 import Body from '../Body/Body';
 import Response from '../Response/Response';
 
-const Main = () => {
+const Main = ({ serverStatus }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [method, setMethod] = useState('get');
     const [url, setUrl] = useState('');
@@ -43,6 +43,7 @@ const Main = () => {
             setErrors(result.errorMessages);
         }
 
+        setCurrentTab('Response');
         setIsLoading(true);
 
         const responseObject = await requestsService.sendRequest(result.data.requestObject);
@@ -57,7 +58,7 @@ const Main = () => {
             responseBody.value = '';
             responseBody.type = 'text';
         } else if (bodyType === 'json') {
-            responseBody.value = JSON.stringify(responseObject.data.body)
+            responseBody.value = JSON.stringify(responseObject.data.body, null, 4);
         }
 
         setIsLoading(false);
@@ -68,8 +69,6 @@ const Main = () => {
             headers: responseObject.data.headers,
             body: responseBody
         });
-
-        setCurrentTab('Response');
     }
 
     // TODO: Implement errors visualisation
