@@ -15,7 +15,7 @@ const SectionButtonsContainer = (props) => {
                 isActive: false
             },
             {
-                text: 'Request',
+                text: 'Preview',
                 isActive: false
             },
             {

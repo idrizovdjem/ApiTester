@@ -27,11 +27,12 @@
     font-size: 3vh;
     margin-left: 2vh;
     margin-top: 1vh;
-    border: none;
+    border: 2px solid transparent;
     border-radius: 5px;
 }
 
 .GetBack:hover {
     background-color: lightblue;
     cursor: pointer;
+    border: 2px solid black;
 }

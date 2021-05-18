@@ -9,6 +9,7 @@ import SectionButtonsContainer from '../SectionButtonsContainer/SectionButtonsCo
 import Headers from '../Headers/Headers';
 import Body from '../Body/Body';
 import Response from '../Response/Response';
+import Preview from '../Preview/Preview';
 
 const Main = ({ serverStatus }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +33,7 @@ const Main = ({ serverStatus }) => {
         switch (currentTab) {
             case 'Headers': return <Headers headers={headers} setHeaders={setHeaders} />;
             case 'Body': return <Body body={body} setBody={setBody} />;
+            case 'Preview': return <Preview errors={errors} />;
             case 'Response': return <Response response={response} isLoading={isLoading} />
             default: return <Headers headers={headers} setHeaders={setHeaders} />;
         }
@@ -42,6 +44,7 @@ const Main = ({ serverStatus }) => {
         const result = requestsService.prepareRequest({ method, url, body, headers });
         if (result.ok === false) {
             setErrors(result.errorMessages);
+            return;
         }
 
         // check if the request is not for localhost and the server is down, don't make request
