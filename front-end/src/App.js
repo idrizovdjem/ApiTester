@@ -27,7 +27,7 @@ const App = () => {
 
 	let currentPageElement = <Main serverStatus={serverStatus} />;
 	if(currentPage === 'Limitations') {
-		currentPageElement = <Limitations />;
+		currentPageElement = <Limitations setCurrentPage={setCurrentPage} />;
 	}
 
 	return (
