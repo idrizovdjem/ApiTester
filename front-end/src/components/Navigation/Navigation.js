@@ -1,18 +1,6 @@
-import { useEffect } from 'react';
-import utilitiesService from '../../services/utilitiesService';
-
 import classes from './Navigation.module.css';
 
 const Navigation = ({ serverStatus, setServerStatus }) => {
-    useEffect(() => {
-        const fetchServerStatus = async () => {
-            const statusResponse = await utilitiesService.getServerStatus();
-            setServerStatus(statusResponse);
-        }
-
-        fetchServerStatus();
-    });
-
     const serverStatusLabelColor = serverStatus === 'OK' ? '#116530' : 'red';
 
     return (

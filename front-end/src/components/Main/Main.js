@@ -43,6 +43,11 @@ const Main = ({ serverStatus }) => {
             setErrors(result.errorMessages);
         }
 
+        if(result.data.requestObject.isLocalHost === false && serverStatus === 'DOWN') {
+            setErrors(['Can\'t make request while server is down']);
+            return;
+        }
+
         setCurrentTab('Response');
         setIsLoading(true);
 
