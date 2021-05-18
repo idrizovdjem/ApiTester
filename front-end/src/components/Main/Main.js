@@ -38,19 +38,23 @@ const Main = ({ serverStatus }) => {
     }
 
     const sendRequestHandler = async () => {
+        // validate request entries such as host and path, body and headers
         const result = requestsService.prepareRequest({ method, url, body, headers });
         if (result.ok === false) {
             setErrors(result.errorMessages);
         }
 
+        // check if the request is not for localhost and the server is down, don't make request
         if(result.data.requestObject.isLocalHost === false && serverStatus === 'DOWN') {
             setErrors(['Can\'t make request while server is down']);
             return;
         }
 
+        // switch tabs and show loading spinner
         setCurrentTab('Response');
         setIsLoading(true);
-
+        
+        // send request and get body type
         const responseObject = await requestsService.sendRequest(result.data.requestObject);
         const bodyType = headersService.getBodyType(responseObject.data.headers);
 

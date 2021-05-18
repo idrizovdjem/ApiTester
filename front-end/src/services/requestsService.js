@@ -2,7 +2,6 @@ import utilitiesService from './utilitiesService';
 import headersService from './headersService';
 
 import axios from 'axios';
-import request from 'request';
 import { ServerURL } from '../constants/RequestConstants';
 
 const allowedMethods = ['get', 'post', 'put', 'delete'];
@@ -40,7 +39,7 @@ const attachBody = (body) => {
     let newBodyValue = '';
 
     if (body.type === 'json' || body.type === 'xml') {
-        newBodyValue = body.value.replace(replaceRegex, '');
+        newBodyValue = JSON.parse(body.value.replace(replaceRegex, ''));
     } else if (body.type === 'form url encoded') {
         const formValues = body.value.map(form => `${escape(form.key)}=${escape(form.value)}`);
         newBodyValue = formValues.join('&');
@@ -75,7 +74,9 @@ const prepareRequest = ({ method, url, body, headers }) => {
 
     // prepare and add headers to the request object
     requestObject.headers = headersService.prepareHeaders(headers);
-    headersService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
+    if(requestObject.isLocalHost === false) {
+        headersService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
+    }
 
     requestObject.body = attachBody(body);
 
@@ -84,24 +85,46 @@ const prepareRequest = ({ method, url, body, headers }) => {
 }
 
 const sendRequest = async (requestObject) => {
-    if (requestObject.isLocalHost) {
-        sendLocalHostRequest(requestObject);
-        return {};
-    } else {
-        const response = await axios.post(ServerURL, { requestObject });
-        return response;
+    try {
+        if (requestObject.isLocalHost) {
+            const response = await sendLocalHostRequest(requestObject);
+            return response;
+        } else {
+            const response = await axios.post(ServerURL, { requestObject });
+            return response;
+        }
+    } catch (error) {
+        return {
+            data: {
+                body: '',
+                statusCode: 404,
+                headers: {},
+                statusText: 'NOT FOUND'
+            }
+        }
     }
 }
 
-const sendLocalHostRequest = ({ method, url, body, headers }) => {
-    // Todo: implement
-    // fetch(url, {
-    //     headers: {
-    //         'User': 'custom'
-    //     }
-    // })
-    // .then(response => console.log(response))
-    // .catch(error => console.log(error));
+const sendLocalHostRequest = async ({ method, url, body, headers }) => {
+    let response;
+    if(method === 'get') {
+        response = await axios.get(url, { headers });
+    } else if(method === 'post') {
+        response = await axios.post(url, body, { headers });
+    } else if(method === 'put') {
+        response = await axios.put(url, body, { headers });
+    } else {
+        response = await axios.delete(url, { headers });
+    }
+
+    return {
+        data: {
+            body: response.data,
+            statusCode: response.status,
+            headers: response.headers,
+            statusText: response.statusText
+        }
+    }
 }
 
 const requestsService = {
