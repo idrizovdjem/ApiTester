@@ -25,14 +25,21 @@ const addErroMessage = (validateResult, message) => {
 }
 
 const splitUrl = (url) => {
-    const urlObject = new URL(url);
-    const path = urlObject.pathname + urlObject.search;
-    const port = urlObject.port;
-    const host = urlObject.hostname + (port ? `:${port}` : '');
+    try {
+        const urlObject = new URL(url);
+        const path = urlObject.pathname + urlObject.search;
+        const port = urlObject.port;
+        const host = urlObject.hostname + (port ? `:${port}` : '');
 
-    return {
-        path,
-        host
+        return {
+            path,
+            host
+        }
+    } catch (error) {
+        return {
+            path: '',
+            host: ''
+        }
     }
 }
 

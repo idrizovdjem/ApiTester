@@ -11,10 +11,11 @@
     margin-top: 0.4vh;
     border-radius: 5px;
     padding: 0 0.5%;
+    float: left;
 }
 
 .HeaderValueInput {
-    width: 64%;
+    width: 62%;
     margin-left: 1%;
 }
 
@@ -26,6 +27,7 @@
     font-size: 3.5vh;
     margin-top: 0.8vh;
     margin-left: 1%;
+    float: left;
     color: darkslategrey;
     user-select: none;
 }
