@@ -11,14 +11,8 @@ import Body from '../Body/Body';
 import Response from '../Response/Response';
 import Preview from '../Preview/Preview';
 
-const Main = ({ serverStatus }) => {
+const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty, headers }) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [method, setMethod] = useState('get');
-    const [url, setUrl] = useState('');
-    const [host, setHost] = useState('');
-    const [path, setPath] = useState('');
-    const [headers, setHeaders] = useState([]);
-    const [body, setBody] = useState({ type: 'no body', value: '' });
     const [currentTab, setCurrentTab] = useState('Response');
     const [errors, setErrors] = useState([]);
     const [response, setResponse] = useState({
@@ -33,26 +27,37 @@ const Main = ({ serverStatus }) => {
 
     const getCurrentTab = () => {
         switch (currentTab) {
-            case 'Headers': return <Headers headers={headers} setHeaders={setHeaders} />;
-            case 'Body': return <Body body={body} setBody={setBody} setHeaders={setHeaders} />;
+            case 'Headers': return (
+                <Headers 
+                    headers={headers} 
+                    changeRequestProperty={changeRequestProperty} 
+                />
+            );
+            case 'Body': return (
+                <Body 
+                    body={selectedRequest.body} 
+                    headers={headers}
+                    changeRequestProperty={changeRequestProperty} 
+                />
+            );
             case 'Preview': return (
                 <Preview 
                     errors={errors}
-                    headers={headers}
-                    host={host}
-                    path={path}
-                    method={method}
-                    body={body} 
+                    headers={selectedRequest.headers}
+                    host={selectedRequest.host}
+                    path={selectedRequest.path}
+                    method={selectedRequest.method}
+                    body={selectedRequest.body} 
                 />
             );
             case 'Response': return <Response response={response} isLoading={isLoading} />
-            default: return <Headers headers={headers} setHeaders={setHeaders} />;
+            default: return <Headers headers={selectedRequest.headers} />;
         }
     }
 
     const sendRequestHandler = async () => {
         // validate request entries such as host and path, body and headers
-        const result = requestsService.prepareRequest({ method, url, body, headers });
+        const result = requestsService.prepareRequest({ method: selectedRequest.method, url: selectedRequest.url , body: selectedRequest.body, headers: selectedRequest.headers });
         if (result.ok === false) {
             setErrors(result.errorMessages);
             return;
@@ -93,6 +98,19 @@ const Main = ({ serverStatus }) => {
             body: responseBody
         });
 
+        setHistory(oldHistory => {
+            const request = {
+                url: selectedRequest.url,
+                host: selectedRequest.host,
+                path: selectedRequest.path,
+                headers: selectedRequest.headers,
+                body: selectedRequest.body,
+                method: selectedRequest.method
+            };
+
+            return [request, ...oldHistory];
+        });
+        
         setErrors([]);
     }
 
@@ -101,13 +119,11 @@ const Main = ({ serverStatus }) => {
     return (
         <main className={classes.Main}>
             <Search
-                method={method}
-                setMethod={setMethod}
-                setHost={setHost}
-                setPath={setPath}         
-                setUrl={setUrl}       
+                headers={headers}
+                method={selectedRequest.method}
+                url={selectedRequest.url}
                 sendRequest={sendRequestHandler}
-                setHeaders={setHeaders}
+                changeRequestProperty={changeRequestProperty}
             />
 
             <SectionButtonsContainer selectTab={setCurrentTab} currentTab={currentTab} />

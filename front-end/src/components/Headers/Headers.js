@@ -4,35 +4,27 @@ import classes from './Headers.module.css';
 
 import HeaderControll from './HeaderControll/HeaderControll';
 
-const Headers = ({ headers, setHeaders }) => {
+const Headers = ({ headers, changeRequestProperty }) => {
     const [selectedHeaderIndex, setSelectedHeaderIndex] = useState(-1);
     const [selectedHeaderInput, setSelectedHeaderInput] = useState('');
 
     const addHeaderHandler = () => {
-        setHeaders(oldHeaders => {
-            const newHeaders = [...oldHeaders, { key: '', value: '' }];
-            return newHeaders;
-        });
-
+        const newHeaders = [...headers, { key: '', value: '' }];
+        changeRequestProperty('headers', newHeaders);
         setSelectedElementHandler(-1, '');
     }
 
     const deleteHeaderHandler = (index) => {
-        setHeaders(oldHeaders => {
-            const newHeaders = oldHeaders.slice();
-            newHeaders.splice(index, 1);
-            return newHeaders;
-        });
-
+        const newHeaders = headers.slice();
+        newHeaders.splice(index, 1);
+        changeRequestProperty('headers', newHeaders);
         setSelectedElementHandler(-1, '');
     }
 
     const updateHeaderHandler = (index, header) => {
-        setHeaders(oldHeaders => {
-            const newHeaders = oldHeaders.slice();
-            newHeaders[index] = header;
-            return newHeaders;
-        });
+        const newHeaders = headers.slice();
+        newHeaders[index] = header;
+        changeRequestProperty('headers', newHeaders);
     }
 
     const setSelectedElementHandler = (index, element) => {

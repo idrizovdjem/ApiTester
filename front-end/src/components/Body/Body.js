@@ -5,7 +5,7 @@ import BodySidebar from './BodySidebar/BodySidebar';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import FormUrlEncodedEditor from './FormUrlEncodedEditor/FormUrlEncodedEditor';
 
-const Body = ({ body, setBody, setHeaders }) => {
+const Body = ({ body, headers, changeRequestProperty }) => {
     const [bodyType, setBodyType] = useState(body.type);
     const [fontSize, setFontSize] = useState('20px');
     const [fontTheme, setFontTheme] = useState('github');
@@ -48,10 +48,9 @@ const Body = ({ body, setBody, setHeaders }) => {
     }
 
     const changeBodyHandler = (newBody) => {
-        setBody(oldBody => {
-            oldBody.value = newBody;
-            return oldBody;
-        });
+        const bodyObject = {...body};
+        bodyObject.value = newBody;
+        changeRequestProperty('body', bodyObject);
     }
 
     return (
@@ -60,11 +59,12 @@ const Body = ({ body, setBody, setHeaders }) => {
                 bodyType={body.type}
                 fontSize={fontSize}
                 fontTheme={fontTheme}
+                body={body}
                 setBodyType={setBodyType}
-                setBody={setBody}
                 setFontSize={setFontSize}
                 setFontTheme={setFontTheme}
-                setHeaders={setHeaders}
+                headers={headers}
+                changeRequestProperty={changeRequestProperty}
             />
 
             {getBodyEditor()}

@@ -6,46 +6,48 @@ const Search = (props) => {
     const changeMethodHandler = (event) => {
         const method = event.target.value.toLowerCase();
         props.setMethod(method);
+        props.changeRequestProperty('method', method);
     }
-    
+
     const changeUrlHandler = (event) => {
         const newUrl = event.target.value;
         const { host, path } = utilitiesService.splitUrl(newUrl);
 
-        props.setUrl(newUrl);
-        props.setHost(host);
-        props.setPath(path);
+        props.changeRequestProperty('url', newUrl);
+        props.changeRequestProperty('host', host);
+        props.changeRequestProperty('path', path);
+        changeHeaderHost(props.headers, host);
+    }
 
-        props.setHeaders(oldHeaders => {
-            const newHeaders = oldHeaders.slice(); 
-            const hostHeader = newHeaders.find(header => header.key === 'host');
-            
-            if(host === '') {
-                // invalid host
-                if(hostHeader === undefined) {
-                    return newHeaders;
-                }
+    const changeHeaderHost = (headers, host) => {
+        const newHeaders = headers.slice();
+        const hostHeader = newHeaders.find(header => header.key === 'host');
 
-                const index = newHeaders.indexOf(hostHeader);
-                newHeaders.splice(index, 1);
-                return newHeaders;
+        if (host === '') {
+            // invalid host
+            if (hostHeader === undefined) {
+                props.changeRequestProperty('headers', newHeaders);
             }
 
-            if(hostHeader === undefined) {
-                newHeaders.push({ key: 'host', value: host });
-            } else {
-                hostHeader.value = host;
-            }
+            const index = newHeaders.indexOf(hostHeader);
+            newHeaders.splice(index, 1);
+            props.changeRequestProperty('headers', newHeaders);
+        }
 
-            return newHeaders;
-        });
+        if (hostHeader === undefined) {
+            newHeaders.push({ key: 'host', value: host });
+        } else {
+            hostHeader.value = host;
+        }
+
+        props.changeRequestProperty('headers', newHeaders);
     }
 
     return (
         <div className={classes.Search}>
-            <select 
-                onChange={changeMethodHandler} 
-                value={props.method} 
+            <select
+                onChange={changeMethodHandler}
+                value={props.method}
                 className={classes.SearchMethod}
             >
                 <option value='get'>GET</option>
@@ -54,14 +56,14 @@ const Search = (props) => {
                 <option value='delete'>DELETE</option>
             </select>
 
-            <input 
+            <input
                 onChange={changeUrlHandler}
-                value={props.url} 
-                className={classes.SearchField} 
-                spellCheck={false} 
+                value={props.url}
+                className={classes.SearchField}
+                spellCheck={false}
             />
 
-            <button 
+            <button
                 className={classes.GoButton}
                 onClick={props.sendRequest}
             >Send</button>

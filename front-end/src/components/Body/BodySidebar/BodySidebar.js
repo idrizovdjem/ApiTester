@@ -4,39 +4,39 @@ const BodySidebar = (props) => {
     const changeBodyTypeHandler = (event) => {
         const newBodyType = event.target.value;
         props.setBodyType(newBodyType);
+        changeContentTypeHeader(props.headers, newBodyType);
 
-        props.setHeaders(oldHeaders => {
-            const newHeaders = oldHeaders.slice();
-            const contentTypeHeader = newHeaders.find(header => header.key === 'content-type');
+        const newBody = {...props.body};
+        newBody.type = newBodyType;
+        newBody.value = newBodyType === 'application/x-www-form-urlencoded' ? [] : '';
+        props.changeRequestProperty('body', newBody);
+    }
 
-            // check if the new body type is no body
-            if(newBodyType === 'no body') {
-                if(contentTypeHeader === undefined) {
-                    return newHeaders;
-                }
-                
-                // if it is remove the content-type header if it is present
-                const headerIndex = newHeaders.indexOf(contentTypeHeader);
-                newHeaders.splice(headerIndex, 1);
-                return newHeaders;
-            }
+    const changeContentTypeHeader = (headers, newBodyType) => {
+        const newHeaders = headers.slice();
+        const contentTypeHeader = newHeaders.find(header => header.key === 'content-type');
 
+        // check if the new body type is no body
+        if(newBodyType === 'no body') {
             if(contentTypeHeader === undefined) {
-                // check if the header is not present and add it
-                newHeaders.push({ key: 'content-type', value: newBodyType });
-            } else {
-                // change content type header value
-                contentTypeHeader.value = newBodyType;
+                props.changeRequestProperty('headers', newHeaders);
             }
+            
+            // if it is remove the content-type header if it is present
+            const headerIndex = newHeaders.indexOf(contentTypeHeader);
+            newHeaders.splice(headerIndex, 1);
+            props.changeRequestProperty('headers', newHeaders);
+        }
 
-            return newHeaders;
-        });
-        
-        props.setBody(oldBody => {
-            oldBody.type = newBodyType;
-            oldBody.value = newBodyType === 'application/x-www-form-urlencoded' ? [] : '';
-            return oldBody;
-        });
+        if(contentTypeHeader === undefined) {
+            // check if the header is not present and add it
+            newHeaders.push({ key: 'content-type', value: newBodyType });
+        } else {
+            // change content type header value
+            contentTypeHeader.value = newBodyType;
+        }
+
+        props.changeRequestProperty('headers', newHeaders);
     }
 
     const changeFontSizeHandler = (event) => {

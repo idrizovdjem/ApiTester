@@ -11,8 +11,24 @@
     margin: 0;
     font-size: 5vh;
     color: white;
+    margin-bottom: 1vh;
 }
 
 .HistoryContainer {
     width: 100%;
+}
+
+.Request {
+    width: 96%;
+    margin: 1vh auto;
+    border-radius: 5px;
+    padding: 1vh 0;
+    font-size: 3vh;
+    background-color: aliceblue;
+    user-select: none;
+}
+
+.Request:hover {
+    background-color: lightblue;
+    cursor: pointer;
 }
