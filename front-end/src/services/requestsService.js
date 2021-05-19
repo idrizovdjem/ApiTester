@@ -35,12 +35,12 @@ const attachBody = (body) => {
     const replaceRegex = /\s*/gm;
     let newBodyValue = '';
 
-    if (body.type === 'json' || body.type === 'xml') {
+    if (body.type === 'application/json' || body.type === 'application/xml') {
         newBodyValue = body.value.replace(replaceRegex, '');
         if(newBodyValue !== '') {
             newBodyValue = JSON.parse(newBodyValue);
         }
-    } else if (body.type === 'form url encoded') {
+    } else if (body.type === 'application/x-www-form-urlencoded') {
         const formValues = body.value.map(form => `${escape(form.key)}=${escape(form.value)}`);
         newBodyValue = formValues.join('&');
     }
