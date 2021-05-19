@@ -8,23 +8,30 @@
 
 .HeaderLine {
     font-size: 4vh;
-    width: 98%;
+    width: 96%;
     float: left;
     margin-top: 1vh;
-    margin-left: 2%;
+    padding-left: 2%;
+    margin-left: 1%;
+    border-radius: 5px;
+    background-color: #A3EBB1;
 }
 
 .Headers {
     float: left;
-    width: 98%;
+    width: 96%;
     margin-top: 1vh;
-    margin-left: 2%;
+    margin-left: 1%;
+    padding-left: 2%;
+    background-color: #A3EBB1;
+    border-radius: 5px;
 }
 
 .Header {
     float: left;
     width: 98%;
     margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 .HeaderKeys {
@@ -41,7 +48,11 @@
 
 .Body {
     float: left;
-    width: 98%;
+    width: 96%;
     margin-top: 1vh;
-    margin-left: 2%;
+    padding-left: 2%;
+    margin-left: 1%;
+    font-size: 4vh;
+    border-radius: 5px;
+    background-color: #A3EBB1;
 }

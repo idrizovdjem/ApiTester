@@ -138,7 +138,7 @@ const previewRequest = (request) => {
     let previewBody = requestObject.body;
     
     if(bodyType === 'json') {
-        previewBody = JSON.stringify(requestObject.body);
+        previewBody = JSON.stringify(requestObject.body, null, 4);
     } 
 
     const previewHeaders = requestObject.headers;

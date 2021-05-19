@@ -26,7 +26,6 @@ const App = () => {
 
 		return () => {
 			clearInterval(timer);
-			console.log('interval cleared');
 		}
     });
 

@@ -37,7 +37,7 @@ const Preview = ({ errors }) => {
                 }
             </div>
 
-            <div className={classes.Body}>
+        <div className={classes.Body}>
                 {requestPreview.body}
             </div>
         </div>
