@@ -5,3 +5,43 @@
     background-color: #81B622;
     border-radius: 5px;
 }
+
+.HeaderLine {
+    font-size: 4vh;
+    width: 98%;
+    float: left;
+    margin-top: 1vh;
+    margin-left: 2%;
+}
+
+.Headers {
+    float: left;
+    width: 98%;
+    margin-top: 1vh;
+    margin-left: 2%;
+}
+
+.Header {
+    float: left;
+    width: 98%;
+    margin-top: 1vh;
+}
+
+.HeaderKeys {
+    margin: 0;
+    width: 30%;
+    float: left;
+}
+
+.HeaderValues {
+    margin: 0;
+    float: left;
+    width: 70%;
+}
+
+.Body {
+    float: left;
+    width: 98%;
+    margin-top: 1vh;
+    margin-left: 2%;
+}

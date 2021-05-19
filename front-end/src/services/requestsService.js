@@ -1,7 +1,7 @@
 import utilitiesService from './utilitiesService';
 import headersService from './headersService';
 
-import axios from 'axios';
+import axios from '../axios';
 import { ServerURL } from '../constants/RequestConstants';
 
 const allowedMethods = ['get', 'post', 'put', 'delete'];
@@ -130,8 +130,35 @@ const sendLocalHostRequest = async ({ method, url, body, headers }) => {
     }
 }
 
+const previewRequest = (request) => {
+    const requestObject = request.data.requestObject;
+    const headerLine = `${requestObject.method.toUpperCase()} ${requestObject.path} ${requestObject.httpVersion}`;
+
+    const bodyType = headersService.getBodyType(requestObject.headers);
+    let previewBody = requestObject.body;
+    
+    if(bodyType === 'json') {
+        previewBody = JSON.stringify(requestObject.body);
+    } 
+
+    const previewHeaders = requestObject.headers;
+    const contentTypeHeader = previewHeaders['content-type'];
+    if(contentTypeHeader === '') {
+        previewHeaders['content-type'] = 'No Body';
+    }
+
+    const requestPreview = {
+        headerLine,
+        headers: previewHeaders,
+        body: previewBody
+    };
+
+    return requestPreview;
+}
+
 const requestsService = {
     validateHeaderLine,
+    previewRequest,
     prepareRequest,
     sendRequest,
     attachBody

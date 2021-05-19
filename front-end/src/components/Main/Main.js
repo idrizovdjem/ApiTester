@@ -81,6 +81,8 @@ const Main = ({ serverStatus }) => {
             headers: responseObject.data.headers,
             body: responseBody
         });
+
+        setErrors([]);
     }
 
     // TODO: Implement errors visualisation

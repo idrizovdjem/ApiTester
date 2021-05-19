@@ -54,12 +54,14 @@ const addDefaultHeaders = (headers, host, body) => {
 }
 
 const getContentType = (bodyType) => {
-    if(bodyType === 'json' || bodyType === 'xml') {
-        return bodyType;
-    } else if(bodyType === 'no body') {
-        return '';
+    if(bodyType === 'json') {
+        return 'application/json';
+    } else if(bodyType === 'xml') {
+        return 'application/xml';
     } else if(bodyType === 'form url encoded') {
         return 'x-www-form-urlencoded';
+    } else {
+        return '';
     }
 }
 

@@ -19,10 +19,15 @@ const App = () => {
 
 		fetchServerStatus();
 
-        setInterval(() => {
+        const timer = setInterval(() => {
 			// check server status every 3 minutes
 			fetchServerStatus();
 		}, 1000 * 180);
+
+		return () => {
+			clearInterval(timer);
+			console.log('interval cleared');
+		}
     });
 
 	let currentPageElement = <Main serverStatus={serverStatus} />;

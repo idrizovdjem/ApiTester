@@ -25,6 +25,7 @@ const SectionButtonsContainer = (props) => {
         ]
     );
 
+    buttons.forEach(button => button.isActive = false);
     const selectedButton = buttons.find(button => button.text === props.currentTab);
     selectedButton.isActive = true;
 
