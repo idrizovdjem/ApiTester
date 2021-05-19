@@ -12,6 +12,7 @@ const Limitations = ({ setCurrentPage }) => {
                     For localhost there are certain headers that you can't alter
                     <a target='blank' className={classes.Link} href='https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name'>Forbidden Header Names</a>
                 </li>
+                <li>There is no cookie support</li>
                 <li>There are only four supported methods</li>
             </ul>
 
