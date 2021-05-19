@@ -15,11 +15,10 @@ const Preview = (props) => {
         );
     }
  
-    const headerLine = `${props.method.toUpperCase()} ${props.url} HTTP/1.1`;
+    const headerLine = `${props.method.toUpperCase()} ${props.path} HTTP/1.1`;
     let requestBody = props.body.value;
 
-    // if the body type is form url encoded(body value is object) the body should be converted to string
-    if(typeof requestBody !== 'string') {
+    if(props.body.type === 'application/x-www-form-urlencoded') {
         requestBody = Object.keys(requestBody).map(form => {
             const formKey = escape(requestBody[form].key);
             const formValue = escape(requestBody[form].value);

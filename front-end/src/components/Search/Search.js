@@ -1,5 +1,7 @@
 import classes from './Search.module.css';
 
+import utilitiesService from '../../services/utilitiesService';
+
 const Search = (props) => {
     const changeMethodHandler = (event) => {
         const method = event.target.value.toLowerCase();
@@ -8,7 +10,35 @@ const Search = (props) => {
     
     const changeUrlHandler = (event) => {
         const newUrl = event.target.value;
+        const { host, path } = utilitiesService.splitUrl(newUrl);
+
         props.setUrl(newUrl);
+        props.setHost(host);
+        props.setPath(path);
+
+        props.setHeaders(oldHeaders => {
+            const newHeaders = oldHeaders.slice(); 
+            const hostHeader = newHeaders.find(header => header.key === 'host');
+            
+            if(host === '') {
+                // invalid host
+                if(hostHeader === undefined) {
+                    return newHeaders;
+                }
+
+                const index = newHeaders.indexOf(hostHeader);
+                newHeaders.splice(index, 1);
+                return newHeaders;
+            }
+
+            if(hostHeader === undefined) {
+                newHeaders.push({ key: 'host', value: host });
+            } else {
+                hostHeader.value = host;
+            }
+
+            return newHeaders;
+        });
     }
 
     return (

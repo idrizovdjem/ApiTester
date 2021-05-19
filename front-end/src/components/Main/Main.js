@@ -15,6 +15,8 @@ const Main = ({ serverStatus }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [method, setMethod] = useState('get');
     const [url, setUrl] = useState('');
+    const [host, setHost] = useState('');
+    const [path, setPath] = useState('');
     const [headers, setHeaders] = useState([]);
     const [body, setBody] = useState({ type: 'no body', value: '' });
     const [currentTab, setCurrentTab] = useState('Response');
@@ -37,7 +39,8 @@ const Main = ({ serverStatus }) => {
                 <Preview 
                     errors={errors}
                     headers={headers}
-                    url={url}
+                    host={host}
+                    path={path}
                     method={method}
                     body={body} 
                 />
@@ -100,9 +103,11 @@ const Main = ({ serverStatus }) => {
             <Search
                 method={method}
                 setMethod={setMethod}
-                url={url}
-                setUrl={setUrl}
+                setHost={setHost}
+                setPath={setPath}         
+                setUrl={setUrl}       
                 sendRequest={sendRequestHandler}
+                setHeaders={setHeaders}
             />
 
             <SectionButtonsContainer selectTab={setCurrentTab} currentTab={currentTab} />

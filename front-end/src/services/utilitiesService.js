@@ -24,10 +24,23 @@ const addErroMessage = (validateResult, message) => {
     validateResult.errorMessages.push(message);
 }
 
+const splitUrl = (url) => {
+    const urlObject = new URL(url);
+    const path = urlObject.pathname + urlObject.search;
+    const port = urlObject.port;
+    const host = urlObject.hostname + (port ? `:${port}` : '');
+
+    return {
+        path,
+        host
+    }
+}
+
 const utilitiesService = {
     buildValidateResult,
     addErroMessage,
-    getServerStatus
+    getServerStatus,
+    splitUrl
 };
 
 export default utilitiesService;

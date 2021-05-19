@@ -16,18 +16,15 @@ const validateHeaderLine = (method, url) => {
     if (url === '') {
         utilitiesService.addErroMessage(validateResult, 'Destination URL cannot be empty');
     } else {
-        const urlObject = new URL(url);
-        const path = urlObject.pathname + urlObject.search;
-        const port = urlObject.port;
-        const host = urlObject.hostname + (port ? `:${port}` : '');
+        const urlObject = utilitiesService.splitUrl(url);
 
-        if (host === '') {
+        if (urlObject.host === '') {
             utilitiesService.addErroMessage(validateResult, 'Invalid host');
         }
-
+    
         validateResult.data = {
-            path,
-            host
+            path: urlObject.path,
+            host: urlObject.host
         };
     }
 
