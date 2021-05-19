@@ -41,6 +41,7 @@ const App = () => {
 
 	const selectRequest = (requestIndex) => {
 		const request = {...history[requestIndex]};
+		setHeaders(request.headers);
 		setSelectedRequest(request);
 	}
 

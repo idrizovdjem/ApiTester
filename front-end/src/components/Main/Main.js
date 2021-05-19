@@ -103,7 +103,7 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
                 url: selectedRequest.url,
                 host: selectedRequest.host,
                 path: selectedRequest.path,
-                headers: selectedRequest.headers,
+                headers: headers,
                 body: selectedRequest.body,
                 method: selectedRequest.method
             };
