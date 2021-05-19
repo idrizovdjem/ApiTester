@@ -5,7 +5,7 @@ import BodySidebar from './BodySidebar/BodySidebar';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import FormUrlEncodedEditor from './FormUrlEncodedEditor/FormUrlEncodedEditor';
 
-const Body = ({ body, setBody }) => {
+const Body = ({ body, setBody, setHeaders }) => {
     const [bodyType, setBodyType] = useState(body.type);
     const [fontSize, setFontSize] = useState('20px');
     const [fontTheme, setFontTheme] = useState('github');
@@ -17,10 +17,9 @@ const Body = ({ body, setBody }) => {
         height: '75vh'
     };
 
-    // TODO: Form url encoded add body
     const getBodyEditor = () => {
         switch (bodyType) {
-            case 'json': return (
+            case 'application/json': return (
                 <CodeEditor
                     fontSize={fontSize}
                     theme={fontTheme}
@@ -29,7 +28,7 @@ const Body = ({ body, setBody }) => {
                     style={bodyEditorStyle}
                 />
             );
-            case 'xml': return (
+            case 'application/xml': return (
                 <CodeEditor
                     fontSize={fontSize}
                     theme={fontTheme}
@@ -38,7 +37,7 @@ const Body = ({ body, setBody }) => {
                     style={bodyEditorStyle}
                 />
             );
-            case 'form url encoded': return (
+            case 'application/x-www-form-urlencoded': return (
                 <FormUrlEncodedEditor
                     body={body}
                     updateBody={changeBodyHandler}
@@ -65,6 +64,7 @@ const Body = ({ body, setBody }) => {
                 setBody={setBody}
                 setFontSize={setFontSize}
                 setFontTheme={setFontTheme}
+                setHeaders={setHeaders}
             />
 
             {getBodyEditor()}

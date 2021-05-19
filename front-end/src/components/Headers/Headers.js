@@ -42,7 +42,6 @@ const Headers = ({ headers, setHeaders }) => {
 
     return (
         <div className={classes.Headers}>
-            <h3 className={classes.HeadersLabel}>Headers</h3>
             {
                 headers.map((header, index) => {
                     return (

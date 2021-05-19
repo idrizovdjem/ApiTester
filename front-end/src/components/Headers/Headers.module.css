@@ -6,15 +6,9 @@
     border-radius: 5px;
 }
 
-.HeadersLabel {
-    margin: 0;
-    padding: 0;
-    font-size: 4vh;
-    margin-left: 2vh;
-}
-
 .AddHeaderButton {
     float: right;
+    margin-top: 2vh;
     font-size: 4vh;
     margin-right: 3vh;
     border: none;

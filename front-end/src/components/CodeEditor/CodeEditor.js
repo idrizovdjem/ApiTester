@@ -16,10 +16,18 @@ import "ace-builds/src-noconflict/theme-chaos";
 import "ace-builds/src-noconflict/theme-cobalt";
 
 const CodeEditor = (props) => {    
+    const getBodyType = (bodyType) => {
+        switch(bodyType) {
+            case 'application/json': return 'json';
+            case 'application/xml': return 'xml';
+            default: return 'text';
+        }
+    }
+
     return (
         <AceEditor
             readOnly={props.isReadOnly}
-            mode={props.body.type}
+            mode={getBodyType(props.body.type)}
             theme={props.theme}
             value={props.body.value}
             onChange={(newBody) => props.updateBody(newBody)}

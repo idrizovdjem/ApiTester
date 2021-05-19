@@ -16,7 +16,7 @@ const Main = ({ serverStatus }) => {
     const [method, setMethod] = useState('get');
     const [url, setUrl] = useState('');
     const [headers, setHeaders] = useState([]);
-    const [body, setBody] = useState({ type: 'json', value: '' });
+    const [body, setBody] = useState({ type: 'no body', value: '' });
     const [currentTab, setCurrentTab] = useState('Response');
     const [errors, setErrors] = useState([]);
     const [response, setResponse] = useState({
@@ -32,8 +32,16 @@ const Main = ({ serverStatus }) => {
     const getCurrentTab = () => {
         switch (currentTab) {
             case 'Headers': return <Headers headers={headers} setHeaders={setHeaders} />;
-            case 'Body': return <Body body={body} setBody={setBody} />;
-            case 'Preview': return <Preview errors={errors} />;
+            case 'Body': return <Body body={body} setBody={setBody} setHeaders={setHeaders} />;
+            case 'Preview': return (
+                <Preview 
+                    errors={errors}
+                    headers={headers}
+                    url={url}
+                    method={method}
+                    body={body} 
+                />
+            );
             case 'Response': return <Response response={response} isLoading={isLoading} />
             default: return <Headers headers={headers} setHeaders={setHeaders} />;
         }
