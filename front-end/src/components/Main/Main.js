@@ -74,7 +74,9 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
         setIsLoading(true);
         
         // send request and get body type
-        const responseObject = await requestsService.sendRequest(result.data.requestObject);
+        const requestObject = result.data.requestObject;
+        requestObject.headers = headersService.prepareHeaders(headers);
+        const responseObject = await requestsService.sendRequest(requestObject);
         const bodyType = headersService.getBodyType(responseObject.data.headers);
 
         const responseBody = {

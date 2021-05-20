@@ -16,6 +16,8 @@
 
 .HistoryContainer {
     width: 100%;
+    height: 86vh;
+    overflow-y: auto;
 }
 
 .Request {
@@ -26,6 +28,7 @@
     font-size: 3vh;
     background-color: aliceblue;
     user-select: none;
+    word-wrap: break-word;
 }
 
 .Request:hover {

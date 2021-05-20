@@ -107,6 +107,7 @@ const sendRequest = async (requestObject) => {
 
 const sendLocalHostRequest = async ({ method, url, body, headers }) => {
     let response;
+
     if(method === 'get') {
         response = await axios.get(url, { headers });
     } else if(method === 'post') {

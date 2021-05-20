@@ -10,7 +10,7 @@ const SideBar = ({ history, selectRequest }) => {
                     history.map((request, index) => {
                         return (
                             <div key={uuidv4()} onClick={() => selectRequest(index)} className={classes.Request}>
-                                {request.path}
+                                {request.url}
                             </div>
                         );
                     })
