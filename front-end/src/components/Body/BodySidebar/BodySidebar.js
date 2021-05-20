@@ -3,7 +3,9 @@ import classes from './BodySidebar.module.css';
 const BodySidebar = (props) => {
     const changeBodyTypeHandler = (event) => {
         const newBodyType = event.target.value;
-        props.setBodyType(newBodyType);
+        const newBodyValue = 'application/x-www-form-urlencoded' ? [] : '';
+
+        props.changeRequestProperty('body', { type: newBodyType, value: newBodyValue });
         changeContentTypeHeader(props.headers, newBodyType);
 
         const newBody = {...props.body};

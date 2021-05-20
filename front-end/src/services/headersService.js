@@ -59,7 +59,7 @@ const getContentType = (bodyType) => {
     } else if(bodyType === 'xml') {
         return 'application/xml';
     } else if(bodyType === 'form url encoded') {
-        return 'x-www-form-urlencoded';
+        return 'application/x-www-form-urlencoded';
     } else {
         return '';
     }

@@ -56,8 +56,10 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
     }
 
     const sendRequestHandler = async () => {
+        const body = selectedRequest.body;
+
         // validate request entries such as host and path, body and headers
-        const result = requestsService.prepareRequest({ method: selectedRequest.method, url: selectedRequest.url , body: selectedRequest.body, headers: selectedRequest.headers });
+        const result = requestsService.prepareRequest({ method: selectedRequest.method, url: selectedRequest.url , body, headers: selectedRequest.headers });
         if (result.ok === false) {
             setErrors(result.errorMessages);
             return;

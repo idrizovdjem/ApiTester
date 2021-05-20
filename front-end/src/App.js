@@ -18,7 +18,7 @@ const App = () => {
 		host: '',
 		path: '',
 		headers: [],
-		body: { key: '', value: '' }
+		body: { type: 'no body', value: '' }
 	});
 
 	useEffect(() => {

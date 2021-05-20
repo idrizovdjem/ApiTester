@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import classes from './Preview.module.css';
 
 import Alert from '../Shared/Alert/Alert';
@@ -37,7 +38,7 @@ const Preview = (props) => {
                 {
                     props.headers.map(header => {
                         return (
-                            <div className={classes.Header}>
+                            <div className={classes.Header} key={uuidv4()}>
                                 <h3 className={classes.HeaderKeys}>{header.key}</h3>
                                 <h3 className={classes.HeaderValues}>{header.value}</h3>
                             </div>

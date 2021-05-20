@@ -6,7 +6,6 @@ import CodeEditor from '../CodeEditor/CodeEditor';
 import FormUrlEncodedEditor from './FormUrlEncodedEditor/FormUrlEncodedEditor';
 
 const Body = ({ body, headers, changeRequestProperty }) => {
-    const [bodyType, setBodyType] = useState(body.type);
     const [fontSize, setFontSize] = useState('20px');
     const [fontTheme, setFontTheme] = useState('github');
 
@@ -18,7 +17,7 @@ const Body = ({ body, headers, changeRequestProperty }) => {
     };
 
     const getBodyEditor = () => {
-        switch (bodyType) {
+        switch (body.type) {
             case 'application/json': return (
                 <CodeEditor
                     fontSize={fontSize}
@@ -60,7 +59,6 @@ const Body = ({ body, headers, changeRequestProperty }) => {
                 fontSize={fontSize}
                 fontTheme={fontTheme}
                 body={body}
-                setBodyType={setBodyType}
                 setFontSize={setFontSize}
                 setFontTheme={setFontTheme}
                 headers={headers}

@@ -5,7 +5,6 @@ import utilitiesService from '../../services/utilitiesService';
 const Search = (props) => {
     const changeMethodHandler = (event) => {
         const method = event.target.value.toLowerCase();
-        props.setMethod(method);
         props.changeRequestProperty('method', method);
     }
 
