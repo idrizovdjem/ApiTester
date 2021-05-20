@@ -15,15 +15,6 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
     const [isLoading, setIsLoading] = useState(false);
     const [currentTab, setCurrentTab] = useState('Response');
     const [errors, setErrors] = useState([]);
-    const [response, setResponse] = useState({
-        statusCode: 0,
-        statusText: '',
-        headers: [],
-        body: {
-            type: 'text',
-            value: ''
-        }
-    });
 
     const getCurrentTab = () => {
         switch (currentTab) {
@@ -50,7 +41,7 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
                     body={selectedRequest.body} 
                 />
             );
-            case 'Response': return <Response response={response} isLoading={isLoading} />
+            case 'Response': return <Response response={selectedRequest.responseObject} isLoading={isLoading} />
             default: return <Headers headers={selectedRequest.headers} />;
         }
     }
@@ -95,12 +86,14 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
 
         setIsLoading(false);
 
-        setResponse({
+        const currentResponse = {
             statusCode: responseObject.data.statusCode,
             statusText: responseObject.data.statusText,
             headers: responseObject.data.headers,
             body: responseBody
-        });
+        };
+
+        changeRequestProperty('responseObject', currentResponse);
 
         setHistory(oldHistory => {
             const request = {
@@ -109,7 +102,8 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
                 path: selectedRequest.path,
                 headers: headers,
                 body: selectedRequest.body,
-                method: selectedRequest.method
+                method: selectedRequest.method,
+                responseObject: currentResponse
             };
 
             return [request, ...oldHistory];

@@ -18,7 +18,16 @@ const App = () => {
 		host: '',
 		path: '',
 		headers: [],
-		body: { type: 'no body', value: '' }
+		body: { type: 'no body', value: '' },
+		responseObject: {
+			statusCode: 0,
+			statusText: '',
+			headers: [],
+			body: {
+				type: 'text',
+				value: ''
+			}
+		}
 	});
 
 	useEffect(() => {
@@ -40,30 +49,31 @@ const App = () => {
 	});
 
 	const selectRequest = (requestIndex) => {
-		const request = {...history[requestIndex]};
+		const request = { ...history[requestIndex] };
 		setHeaders(request.headers);
 		setSelectedRequest(request);
 	}
 
 	const changeRequestProperty = (key, value) => {
-		if(key === 'headers') {
+		if (key === 'headers') {
 			setHeaders(value);
 			return;
 		}
 
 		setSelectedRequest(oldRequest => {
-			oldRequest[key] = value;
-			return oldRequest;
+			const newRequest = {...oldRequest};
+			newRequest[key] = value;
+			return newRequest;
 		});
 	}
 
 	let currentPageElement = (
-		<Main 
-			serverStatus={serverStatus} 
-			setHistory={setHistory} 
-			selectedRequest={selectedRequest} 
+		<Main
+			serverStatus={serverStatus}
+			setHistory={setHistory}
+			selectedRequest={selectedRequest}
 			headers={headers}
-			changeRequestProperty={changeRequestProperty} 
+			changeRequestProperty={changeRequestProperty}
 		/>
 	);
 
