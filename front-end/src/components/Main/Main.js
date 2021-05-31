@@ -112,8 +112,6 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
         setErrors([]);
     }
 
-    // TODO: Implement errors visualisation
-
     return (
         <main className={classes.Main}>
             <Search
