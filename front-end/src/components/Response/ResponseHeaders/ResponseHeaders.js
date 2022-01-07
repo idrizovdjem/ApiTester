@@ -2,7 +2,7 @@ import classes from './ResponseHeaders.module.css';
 
 import ResponseHeaderControll from './ResponseHeaderControll/ResponseHeaderControll';
 
-const ResponseHeaders = ({ headers }) => {
+const ResponseHeaders = ({ headers = [] }) => {
     return (
         <div className={classes.ResponseHeaders}>
             <div className={classes.ResponseHeadersLabel}>Headers</div>

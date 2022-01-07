@@ -7,7 +7,9 @@ import ResponseHeaders from './ResponseHeaders/ResponseHeaders';
 import ResponseBody from './ResponseBody/ResponseBody';
 
 const Response = ({ response, isLoading }) => {
-    const { statusCode, statusText, headers, body } = response;
+    //const { statusCode, statusText, headers, body } = response;
+    const { statusCode, statusText, headers, body } = {};
+    
 
     if(isLoading) {
         return <Spinner />

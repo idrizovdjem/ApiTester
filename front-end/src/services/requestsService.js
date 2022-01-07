@@ -2,7 +2,8 @@ import utilitiesService from './utilitiesService';
 import headersService from './headersService';
 
 import axios from 'axios';
-import { ServerURL } from '../constants/RequestConstants';
+
+const ServerURL = '';
 
 const allowedMethods = ['get', 'post', 'put', 'delete'];
 

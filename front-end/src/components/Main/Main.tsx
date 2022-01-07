@@ -10,8 +10,9 @@ import Headers from '../Headers/Headers';
 import Body from '../Body/Body';
 import Response from '../Response/Response';
 import Preview from '../Preview/Preview';
+import IMainProps from './IMainProps';
 
-const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty, headers }) => {
+const Main = (props: IMainProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentTab, setCurrentTab] = useState('Response');
     const [errors, setErrors] = useState([]);
@@ -20,55 +21,54 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
         switch (currentTab) {
             case 'Headers': return (
                 <Headers 
-                    headers={headers} 
-                    changeRequestProperty={changeRequestProperty} 
+                    headers={props.headers} 
+                    changeRequestProperty={props.changeRequestProperty} 
                 />
             );
             case 'Body': return (
                 <Body 
-                    body={selectedRequest.body} 
-                    headers={headers}
-                    changeRequestProperty={changeRequestProperty} 
+                    body={props.selectedRequest.body} 
+                    headers={props.headers}
+                    changeRequestProperty={props.changeRequestProperty} 
                 />
             );
             case 'Preview': return (
                 <Preview 
                     errors={errors}
-                    headers={selectedRequest.headers}
-                    host={selectedRequest.host}
-                    path={selectedRequest.path}
-                    method={selectedRequest.method}
-                    body={selectedRequest.body} 
+                    headers={props.selectedRequest.headers}
+                    host={props.selectedRequest.host}
+                    path={props.selectedRequest.path}
+                    method={props.selectedRequest.method}
+                    body={props.selectedRequest.body} 
                 />
             );
-            case 'Response': return <Response response={selectedRequest.responseObject} isLoading={isLoading} />
-            default: return <Headers headers={selectedRequest.headers} />;
+            case 'Response': return <Response response={props.selectedRequest.responseObject} isLoading={isLoading} />
+            default: return (
+                <Headers 
+                    headers={props.selectedRequest.headers}
+                    changeRequestProperty={props.changeRequestProperty}
+                />
+            );
         }
     }
 
     const sendRequestHandler = async () => {
-        const body = selectedRequest.body;
+        const body = props.selectedRequest.body;
 
         // validate request entries such as host and path, body and headers
-        const result = requestsService.prepareRequest({ method: selectedRequest.method, url: selectedRequest.url , body, headers: selectedRequest.headers });
+        const result = requestsService.prepareRequest({ method: props.selectedRequest.method, url: props.selectedRequest.url , body, headers: props.selectedRequest.headers });
         if (result.ok === false) {
             setErrors(result.errorMessages);
             return;
         }
-
-        // check if the request is not for localhost and the server is down, don't make request
-        if(result.data.requestObject.isLocalHost === false && serverStatus === 'DOWN') {
-            setErrors(['Can\'t make request while server is down']);
-            return;
-        }
-
+        
         // switch tabs and show loading spinner
         setCurrentTab('Response');
         setIsLoading(true);
         
         // send request and get body type
-        const requestObject = result.data.requestObject;
-        requestObject.headers = headersService.prepareHeaders(headers);
+        const requestObject = (result.data as any).requestObject;
+        requestObject.headers = headersService.prepareHeaders(props.headers);
         const responseObject = await requestsService.sendRequest(requestObject);
         const bodyType = headersService.getBodyType(responseObject.data.headers);
 
@@ -93,16 +93,16 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
             body: responseBody
         };
 
-        changeRequestProperty('responseObject', currentResponse);
+        props.changeRequestProperty('responseObject', currentResponse);
 
-        setHistory(oldHistory => {
+        props.setHistory((oldHistory: any) => {
             const request = {
-                url: selectedRequest.url,
-                host: selectedRequest.host,
-                path: selectedRequest.path,
-                headers: headers,
-                body: selectedRequest.body,
-                method: selectedRequest.method,
+                url: props.selectedRequest.url,
+                host: props.selectedRequest.host,
+                path: props.selectedRequest.path,
+                headers: props.headers,
+                body: props.selectedRequest.body,
+                method: props.selectedRequest.method,
                 responseObject: currentResponse
             };
 
@@ -115,11 +115,11 @@ const Main = ({ serverStatus, setHistory, selectedRequest, changeRequestProperty
     return (
         <main className={classes.Main}>
             <Search
-                headers={headers}
-                method={selectedRequest.method}
-                url={selectedRequest.url}
+                headers={props.headers}
+                method={props.selectedRequest.method}
+                url={props.selectedRequest.url}
                 sendRequest={sendRequestHandler}
-                changeRequestProperty={changeRequestProperty}
+                changeRequestProperty={props.changeRequestProperty}
             />
 
             <SectionButtonsContainer selectTab={setCurrentTab} currentTab={currentTab} />

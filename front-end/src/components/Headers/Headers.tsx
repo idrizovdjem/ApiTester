@@ -2,32 +2,33 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import classes from './Headers.module.css';
 
+import IHeaderProps from './IHeader';
 import HeaderControll from './HeaderControll/HeaderControll';
 
-const Headers = ({ headers, changeRequestProperty }) => {
+const Headers = (props: IHeaderProps) => {
     const [selectedHeaderIndex, setSelectedHeaderIndex] = useState(-1);
     const [selectedHeaderInput, setSelectedHeaderInput] = useState('');
 
     const addHeaderHandler = () => {
-        const newHeaders = [...headers, { key: '', value: '' }];
-        changeRequestProperty('headers', newHeaders);
+        const newHeaders = [...props.headers, { key: '', value: '' }];
+        props.changeRequestProperty('headers', newHeaders);
         setSelectedElementHandler(-1, '');
     }
 
-    const deleteHeaderHandler = (index) => {
-        const newHeaders = headers.slice();
+    const deleteHeaderHandler = (index: number) => {
+        const newHeaders = props.headers.slice();
         newHeaders.splice(index, 1);
-        changeRequestProperty('headers', newHeaders);
+        props.changeRequestProperty('headers', newHeaders);
         setSelectedElementHandler(-1, '');
     }
 
-    const updateHeaderHandler = (index, header) => {
-        const newHeaders = headers.slice();
+    const updateHeaderHandler = (index: number, header: any) => {
+        const newHeaders = props.headers.slice();
         newHeaders[index] = header;
-        changeRequestProperty('headers', newHeaders);
+        props.changeRequestProperty('headers', newHeaders);
     }
 
-    const setSelectedElementHandler = (index, element) => {
+    const setSelectedElementHandler = (index: number, element: any) => {
         setSelectedHeaderIndex(index);
         setSelectedHeaderInput(element);
     }
@@ -35,7 +36,7 @@ const Headers = ({ headers, changeRequestProperty }) => {
     return (
         <div className={classes.Headers}>
             {
-                headers.map((header, index) => {
+                props.headers.map((header: any, index: number) => {
                     return (
                         <HeaderControll
                             deleteHeader={deleteHeaderHandler}
