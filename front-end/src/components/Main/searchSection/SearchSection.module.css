@@ -1,0 +1,25 @@
+.SearchSection {
+    width: 100%;
+    height: 57px;
+    display: flex;
+}
+
+.MethodDropdown,
+.InputText,
+.Button {
+    height: 50px !important;
+    margin: 5px 15px !important;
+    margin-right: 5px !important;
+}
+
+.MethodDropdown {
+    flex-grow: 2;
+}
+
+.InputText {
+    flex-grow: 18;
+}
+
+.Button {
+    flex-grow: 1;
+}

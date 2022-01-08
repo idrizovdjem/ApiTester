@@ -1,11 +1,12 @@
+import classes from './SideBar.module.css';
 import { TabMenu } from 'primereact/tabmenu';
 import { useState } from 'react';
 import SidebarTab from '../../enums/SidebarTab';
 import RequestsPanel from './requestsPanel/RequestsPanel';
 
 const tabItems: any[] = [
-    {label: 'Requests', icon: 'pi pi-fw pi-home'},
-    {label: 'History', icon: 'pi pi-fw pi-history'},
+    { label: 'Requests', icon: 'pi pi-fw pi-home', className: classes.TabItem },
+    { label: 'History', icon: 'pi pi-fw pi-history', className: classes.TabItem },
 ];
 
 const SideBar = () => {

@@ -5,7 +5,7 @@ import CreateFolderDialog from '../createFolderDialog/CreateFolderDialog';
 import IRequestFolder from '../../../interfaces/IRequestFolder';
 import { PanelMenu } from 'primereact/panelmenu';
 import IPanelMenuModel from '../../../interfaces/IPanelMenuModel';
-import PopupDialog from '../../Shared/popupDialog/PopupDialog';
+import PopupDialog from '../../shared/popupDialog/PopupDialog';
 
 const RequestsPanel = (): JSX.Element => {
     const [createFolderDialogVisible, setCreateFolderDialogVisible] = useState<boolean>(false);
