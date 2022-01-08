@@ -13,11 +13,13 @@
 }
 
 .MethodDropdown {
-    flex-grow: 2;
+    flex-grow: 1;
+    min-width: 200px !important;
+    flex-wrap: wrap;
 }
 
 .InputText {
-    flex-grow: 18;
+    flex-grow: 20;
 }
 
 .Button {

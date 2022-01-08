@@ -1,4 +1,3 @@
-import classes from './Main.module.css';
 import SearchSection from './searchSection/SearchSection';
 import TabsPanel from './tabsPanel/TabsPanel';
 

@@ -1,11 +1,12 @@
 import { TabView, TabPanel } from 'primereact/tabview';
+import HeadersPanel from './headersPanel/HeadersPanel';
 
 const TabsPanel = (): JSX.Element => {
     return (
         <section>
             <TabView>
                 <TabPanel header="Headers">
-                    <p>Headers</p>
+                    <HeadersPanel />
                 </TabPanel>
 
                 <TabPanel header="Body">
