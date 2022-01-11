@@ -2,11 +2,16 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import HeadersPanel from './headersPanel/HeadersPanel';
 
 const TabsPanel = (): JSX.Element => {
+    const otherElementsHeightSum = 260;
+    const elementHeight: number = window.innerHeight - otherElementsHeightSum;
+
     return (
         <section>
             <TabView>
                 <TabPanel header="Headers">
-                    <HeadersPanel />
+                    <HeadersPanel 
+                        availableHeight={elementHeight}
+                    />
                 </TabPanel>
 
                 <TabPanel header="Body">
