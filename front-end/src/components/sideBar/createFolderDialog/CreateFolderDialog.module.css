@@ -1,0 +1,9 @@
+.InputText {
+    width: 400px;
+    display: block; 
+    margin-bottom: 10px !important;
+}
+
+.Button {
+    width: 400px;
+}
