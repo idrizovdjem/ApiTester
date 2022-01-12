@@ -1,6 +1,7 @@
 import { TabView, TabPanel } from 'primereact/tabview';
 import BodyPanel from './bodyPanel/BodyPanel';
 import HeadersPanel from './headersPanel/HeadersPanel';
+import RequestPanel from './requestPanel/RequestPanel';
 
 const TabsPanel = (): JSX.Element => {
     return (
@@ -15,7 +16,7 @@ const TabsPanel = (): JSX.Element => {
                 </TabPanel>
 
                 <TabPanel header="Request">
-                    <p>Request</p>
+                    <RequestPanel />
                 </TabPanel>
 
                 <TabPanel header="Response">
