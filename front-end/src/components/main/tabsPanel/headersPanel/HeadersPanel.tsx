@@ -1,5 +1,4 @@
 import { FormEvent, useContext } from 'react';
-import IHeadersPanelProps from './IHeadersPanelProps';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -19,12 +18,12 @@ const columns: IColumn[] = [
     { field: 'action', header: 'Action' }
 ];
 
-const HeadersPanel = (props: IHeadersPanelProps): JSX.Element => {
+const HeadersPanel = (): JSX.Element => {
     const { request, setRequestProperty } = useContext(RequestContext);
 
-    const newButtonHeight = 46;
+    const availableHeight: number = window.innerHeight - 220;
     const dataTableStyle = {
-        height: `${props.availableHeight + newButtonHeight}px`,
+        height: `${availableHeight}px`,
         overflowY: 'auto',
     };
 
