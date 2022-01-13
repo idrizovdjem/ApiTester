@@ -5,7 +5,7 @@ import requestsService from "../../../../services/requestsService";
 import { v4 as uuid } from 'uuid';
 
 const RequestPanel = (): JSX.Element => {
-    const availableHeight: number = window.innerHeight - 160;
+    const availableHeight: number = window.innerHeight - 165;
     const { request } = useContext(RequestContext);
 
     const mapLinesToElements = (): JSX.Element[] => {
@@ -20,8 +20,15 @@ const RequestPanel = (): JSX.Element => {
     }
 
     return (
-        <section style={{ height: `${availableHeight}px` }}>
-            { mapLinesToElements() }
+        <section
+            style={{ height: `${availableHeight}px` }}
+            className={classes.RequestSection}
+        >
+            <pre className={classes.RequestPreview}>
+                {mapLinesToElements()}
+
+                {request.body.value}
+            </pre>
         </section>
     );
 };

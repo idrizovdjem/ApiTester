@@ -6,8 +6,6 @@ export default interface IRequest {
     [index: string]: any;
     method: RequestMethod;
     url: string;
-    host: string;
-    path: string;
     headers: IHeader[];
     body: IBody;
 

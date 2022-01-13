@@ -5,8 +5,6 @@ import IRequest from "../interfaces/IRequest";
 const defaultRequest: IRequest = {
     method: RequestMethod.Get,
     url: '',
-    host: '',
-    path: '',
     headers: [],
     body: { type: BodyType.NoBody, value: '' }
 };

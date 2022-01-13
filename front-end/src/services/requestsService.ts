@@ -1,175 +1,43 @@
 import IRequest from '../interfaces/IRequest';
 import RequestMethod from '../enums/RequestMethod';
-import utilitiesService from './utilitiesService';
 import headersService from './headersService';
-
-import axios from 'axios';
+import utilitiesService from './utilitiesService';
 import IHeader from '../interfaces/IHeader';
 
-// const ServerURL = '';
+const sendRequestAsync = async (request: IRequest): Promise<void> => {
+    const requestCopy: IRequest = {...request};
+    const essentialHeaders: IHeader[] = headersService.getEssentialHeaders(requestCopy);
+    requestCopy.headers = headersService.getHeadersUnion(requestCopy.headers, essentialHeaders);
 
-// const allowedMethods = ['get', 'post', 'put', 'delete'];
-
-// const validateHeaderLine = (method, url) => {
-//     const validateResult = utilitiesService.buildValidateResult();
-
-//     if (allowedMethods.includes(method) === false) {
-//         utilitiesService.addErroMessage(validateResult, 'Invalid request method');
-//     }
-
-//     if (url === '') {
-//         utilitiesService.addErroMessage(validateResult, 'Destination URL cannot be empty');
-//     } else {
-//         const urlObject = utilitiesService.splitUrl(url);
-
-//         if (urlObject.host === '') {
-//             utilitiesService.addErroMessage(validateResult, 'Invalid host');
-//         }
-    
-//         validateResult.data = {
-//             path: urlObject.path,
-//             host: urlObject.host
-//         };
-//     }
-
-//     return validateResult;
-// }
-
-// const attachBody = (body) => {
-//     const replaceRegex = /\s*/gm;
-//     let newBodyValue = '';
-
-//     if (body.type === 'application/json' || body.type === 'application/xml') {
-//         newBodyValue = body.value.replace(replaceRegex, '');
-//         if(newBodyValue !== '') {
-//             newBodyValue = JSON.parse(newBodyValue);
-//         }
-//     } else if (body.type === 'application/x-www-form-urlencoded') {
-//         const formValues = body.value.map(form => `${escape(form.key)}=${escape(form.value)}`);
-//         newBodyValue = formValues.join('&');
-//     }
-
-//     return newBodyValue;
-// }
-
-// const prepareRequest = ({ method, url, body, headers }) => {
-//     const validationResult = utilitiesService.buildValidateResult();
-
-//     // initialize request object
-//     const requestObject = {
-//         method,
-//         httpVersion: 'HTTP/1.1',
-//         url
-//     };
-
-//     // validate the headers line
-//     const headerLineValidationResult = validateHeaderLine(method, url);
-//     if (headerLineValidationResult.ok === false) {
-//         for (const errorMessage of headerLineValidationResult.errorMessages) {
-//             utilitiesService.addErroMessage(validationResult, errorMessage);
-//         }
-
-//         return validationResult;
-//     }
-
-//     requestObject.path = headerLineValidationResult.data.path;
-//     requestObject.host = headerLineValidationResult.data.host;
-//     requestObject.isLocalHost = requestObject.host.includes('localhost');
-
-//     // prepare and add headers to the request object
-//     requestObject.headers = headersService.prepareHeaders(headers);
-//     if(requestObject.isLocalHost === false) {
-//         headersService.addDefaultHeaders(requestObject.headers, requestObject.host, body);
-//     }
-
-//     requestObject.body = attachBody(body, requestObject.isLocalHost);
-
-//     validationResult.data.requestObject = requestObject;
-//     return validationResult;
-// }
-
-// const sendRequest = async (requestObject) => {
-//     try {
-//         if (requestObject.isLocalHost) {
-//             const response = await sendLocalHostRequest(requestObject);
-//             return response;
-//         } else {
-//             const response = await axios.post(ServerURL, { requestObject });
-//             return response;
-//         }
-//     } catch (error) {
-//         return {
-//             data: {
-//                 body: '',
-//                 statusCode: 404,
-//                 headers: {},
-//                 statusText: 'NOT FOUND'
-//             }
-//         }
-//     }
-// }
-
-// const sendLocalHostRequest = async ({ method, url, body, headers }) => {
-//     let response;
-
-//     if(method === 'get') {
-//         response = await axios.get(url, { headers });
-//     } else if(method === 'post') {
-//         response = await axios.post(url, body, { headers });
-//     } else if(method === 'put') {
-//         response = await axios.put(url, body, { headers });
-//     } else {
-//         response = await axios.delete(url, { headers });
-//     }
-
-//     return {
-//         data: {
-//             body: response.data,
-//             statusCode: response.status,
-//             headers: response.headers,
-//             statusText: response.statusText
-//         }
-//     }
-// }
+    fetch('https://localhost:7254/api/requests', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestCopy)
+    })
+    .then((response: Response) => response.json())
+    .then((data: any) => console.log(data))
+    .catch((error: string) => console.log(error));
+}
 
 const getRequestForPreview = (request: IRequest): string[] => {
     const headerLine: string = getHeaderLineForPreview(request);
-    const headers: string[] = getHeadersForPreview(request.headers);
+    const headers: string[] = headersService.getHeadersForPreview(request);
 
-    return [headerLine, ...headers];
+    return [headerLine, ...headers, '\n'];
 };
 
 const getHeaderLineForPreview = (request: IRequest): string => {
     const methodTypeAsString: string = RequestMethod[request.method].toLocaleUpperCase();
 
-    const url: URL | undefined = getUrl(request.url);
+    const url: URL | undefined = utilitiesService.getUrl(request.url);
     const endpoint: string = url !== undefined ? url.pathname : request.url;
 
     return `${methodTypeAsString} ${endpoint} HTTP/1.1`;
 }
 
-const getHeadersForPreview = (headers: IHeader[]): string[] => {
-    return headers.map((header: IHeader) => {
-        return `${header.key}: ${header.value}`;
-    });
-}
-
-const getUrl = (url: string): URL | undefined => {
-    try {
-        const urlObject: URL = new URL(url);
-        return urlObject;
-    } catch {
-        return undefined;
-    }
-}
-
-// const requestsService = {
-//     validateHeaderLine,
-//     prepareRequest,
-//     sendRequest,
-//     attachBody
-// };
-
 export default {
-    getRequestForPreview
+    getRequestForPreview,
+    sendRequestAsync
 };

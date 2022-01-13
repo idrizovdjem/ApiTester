@@ -1,4 +1,15 @@
+.RequestSection {
+    white-space: pre;
+    overflow-y: auto;
+}
+
 .RequestLine {
     font-size: 20px;
     margin: 5px;
+    height: 30px;
+}
+
+.RequestPreview {
+    font-size: 20px;
+    white-space: pre;
 }

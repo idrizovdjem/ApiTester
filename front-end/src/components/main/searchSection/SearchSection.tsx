@@ -5,6 +5,7 @@ import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import RequestMethod from '../../../enums/RequestMethod';
+import requestsService from '../../../services/requestsService';
 
 interface IMethodOptions {
     label: string;
@@ -31,6 +32,10 @@ const SearchSection = (): JSX.Element => {
         setRequestProperty('method', newMethod);
     }
 
+    const onSendButtonClickHandler = async (): Promise<void> => {
+        await requestsService.sendRequestAsync(request);
+    }
+
     return (
         <section className={classes.SearchSection}>
             <Dropdown
@@ -54,6 +59,7 @@ const SearchSection = (): JSX.Element => {
                 label={'Send'}
                 iconPos='right'
                 icon='pi pi-fw pi-send'
+                onClick={onSendButtonClickHandler}
             />
         </section>
     );
